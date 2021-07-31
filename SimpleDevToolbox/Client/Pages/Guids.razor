@@ -7,17 +7,23 @@
 
         <EditForm EditContext="_editContext" OnValidSubmit="CreateGuids">
             <DataAnnotationsValidator />
-            @*<ValidationSummary />*@
 
             <div class="form-group">
-                <label for="createGuidCount" class="form-text text-muted">Specify how many GUIDs you want to create (1-250)</label>
+                <label for="createGuidCount">Specify how many GUIDs you want to create (1-250)</label>
                 <div class="input-group">
                     <InputNumber id="createGuidCount" class="form-control" @bind-Value="_createGuidModel.CreateGuidCount" />
                     <div class="input-group-append">
                         <button class="btn btn-outline-primary" type="submit">Create Guid(s)</button>
                     </div>
                 </div>
-                <ValidationMessage class="invalid-feedback" For="@(() => _createGuidModel.CreateGuidCount)" />
+                <ValidationMessage class="invalid-feedback" For="() => _createGuidModel.CreateGuidCount" />
+            </div>
+
+            <div class="form-group">
+                <label for="template">Output Template</label>
+                <InputTextAreaOnInput id="template" class="form-control" @bind-Value="_createGuidModel.Template" />
+                
+                <p>Sample Output:<br /><span class="code">@_createGuidModel.Sample.ToString()</span></p>
             </div>
 
         </EditForm>
@@ -30,7 +36,7 @@
             <div class="list-group">
                 @foreach (var guid in _guids)
                 {
-                    <button class="list-group-item list-group-item-action @(guid.IsActive ? "active" : "") @(guid.WasActive ? "list-group-item-dark" : "")" @onclick="async () => await SelectGuid(guid)">@guid.Value</button>
+                    <button class="list-group-item list-group-item-action code @(guid.IsActive ? "active" : "") @(guid.WasActive ? "list-group-item-dark" : "")" @onclick="async () => await SelectGuid(guid)">@guid</button>
                 }
             </div>
         }

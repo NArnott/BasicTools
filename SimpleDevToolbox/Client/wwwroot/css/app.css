@@ -30,6 +30,10 @@ a, .btn-link {
     color: red;
 }*/
 
+.code {
+    font-family: monospace;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
