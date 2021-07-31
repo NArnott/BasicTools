@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazorise;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SimpleDevToolbox.Client.Support;
@@ -15,6 +16,9 @@ namespace SimpleDevToolbox.Client.Pages
         
         [Inject]
         IJSRuntime JSRuntime { get; set; }
+
+        [Inject]
+        INotificationService NotificationService { get; set; }
         
         private GuidModel[] _guids;
 
@@ -34,8 +38,6 @@ namespace SimpleDevToolbox.Client.Pages
             }
 
             _editContext.MarkAsUnmodified();
-
-            //await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", _guids[0].ToString());
         }
 
         public async Task SelectGuid(GuidModel model)
@@ -45,6 +47,8 @@ namespace SimpleDevToolbox.Client.Pages
             model.IsActive = true;
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", model.Value.ToString());
+
+            await NotificationService.Info(model.Value.ToString(), "Copied GUID to Clipboard");
         }
     }
 
