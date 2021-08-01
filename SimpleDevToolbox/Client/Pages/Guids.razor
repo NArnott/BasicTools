@@ -4,7 +4,6 @@
 
 <div class="row">
     <div class="col-xl-4 col-lg-6">
-
         <EditForm EditContext="_editContext" OnValidSubmit="CreateGuids">
             <DataAnnotationsValidator />
 
@@ -22,17 +21,40 @@
             <div class="form-group">
                 <label for="template">Output Template</label>
                 <InputTextAreaOnInput id="template" class="form-control" @bind-Value="_createGuidModel.Template" />
-                
+
                 <p>Sample Output:<br /><span class="code">@_createGuidModel.Sample.ToString()</span></p>
             </div>
-
         </EditForm>
 
+        <h3>Example Templates</h3>
+
+        @foreach(var exTemp in _exampleTemplates)
+        {
+            <div class="card mt-2">
+                <div class="card-header">
+                    @exTemp.Name
+                    @if(exTemp.Hint != null)
+                    {
+                        <Icon Class="ml-1" data-toggle="tooltip" title="@exTemp.Hint" Name="IconName.QuestionCircle" />
+                    }
+                    <button class="btn btn-sm btn-outline-info float-right" @onclick="exTemp.Select">Use</button>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@exTemp.Template</h5>
+                    <small class="card-text">Sample: <span class="code">@exTemp.Sample</span></small>
+                </div>
+            </div>
+        }
     </div>
 
     <div class="col-xl-8 col-lg-6">
         @if (_guids != null)
         {
+            @if (_guids.Length > 1)
+            {
+                <button class="btn btn-secondary mb-2" @onclick="CopyAllGuids">Copy All</button>
+            }
+
             <div class="list-group">
                 @foreach (var guid in _guids)
                 {
