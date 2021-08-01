@@ -1,11 +1,25 @@
 ﻿@page "/guids"
 
+
 <h1>Create GUIDs</h1>
 
 <div class="row">
     <div class="col-xl-4 col-lg-6">
         <EditForm EditContext="_editContext" OnValidSubmit="CreateGuids">
             <DataAnnotationsValidator />
+
+            <InputRadioGroup @bind-Value="_createGuidModel.GenerationMode">
+                <span class="mr-3">GUID Generation Mode:</span>
+                @foreach (var mode in (GenerationModes[])Enum.GetValues(typeof(GenerationModes)))
+                {
+                    var id = $"mode_{mode}";
+
+                    <div class="form-check form-check-inline" data-toggle="tooltip" title="@SimpleDevToolbox.Shared.StaticHelpers.GetDescription(mode)">
+                        <InputRadio class="form-check-input" Value="mode" id="@id" />
+                        <label class="form-check-label" for="@id">@mode.ToString()</label>
+                    </div>
+                }
+            </InputRadioGroup>
 
             <div class="form-group">
                 <label for="createGuidCount">Specify how many GUIDs you want to create (1-250)</label>

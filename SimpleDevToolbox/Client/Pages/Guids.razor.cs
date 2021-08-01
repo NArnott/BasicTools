@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using SimpleDevToolbox.Client.Support;
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
@@ -31,7 +32,7 @@ namespace SimpleDevToolbox.Client.Pages
         {
             _editContext = new EditContext(_createGuidModel);
             _editContext.SetFieldCssClassProvider(new BootstrapCssClassProvider());
-
+            
             ExampleTemplate CreateTemplate(string name, string template, string hint = null)
             {
                 return new ExampleTemplate(name, template, hint, t =>
@@ -59,9 +60,9 @@ namespace SimpleDevToolbox.Client.Pages
 
             for (int i = 0; i < _createGuidModel.CreateGuidCount; i++)
             {
-                _guids[i] = new GuidModel(_createGuidModel.Template, i + 1, false);
+                _guids[i] = new GuidModel(_createGuidModel.Template, i + 1, _createGuidModel.GenerationMode, false);
             }
-
+            
             _editContext.MarkAsUnmodified();
         }
 
@@ -97,20 +98,29 @@ namespace SimpleDevToolbox.Client.Pages
             private readonly int _index;
             private readonly Guid _guid;
 
-            public GuidModel(string template, int index, bool sampleGuid)
+            public GuidModel(string template, int index, GenerationModes genMode, bool sampleGuid)
             {
                 _template = template;
                 _index = index;
 
-                _guid = sampleGuid ? _sampleGuid : CreateGuid();
+                _guid = sampleGuid ? _sampleGuid : CreateGuid(genMode);
             }
 
-            static Guid CreateGuid()
+            static Guid CreateGuid(GenerationModes genMode)
             {
-                var buffer = new byte[16];
-                _numberGenerator.GetBytes(buffer);
+                switch (genMode)
+                {
+                    case GenerationModes.Default:
+                        return Guid.NewGuid();
 
-                return new Guid(buffer);
+                    case GenerationModes.Cryptographic:
+                        var buffer = new byte[16];
+                        _numberGenerator.GetBytes(buffer);
+
+                        return new Guid(buffer);
+                }
+
+                throw new NotImplementedException();
             }
 
 
@@ -176,9 +186,12 @@ namespace SimpleDevToolbox.Client.Pages
                 {
                     _template = value;
 
-                    Sample = new GuidModel(value, 1, true);
+                    Sample = new GuidModel(value, 1, GenerationModes.Default, true);
                 }
             }
+
+
+            public GenerationModes GenerationMode { get; set; } = GenerationModes.Default;
 
             public GuidModel Sample { get; private set; }
         }
@@ -210,7 +223,7 @@ namespace SimpleDevToolbox.Client.Pages
                 Template = template;
                 Hint = hint;
 
-                Sample = new GuidModel(template, 1, true);
+                Sample = new GuidModel(template, 1, GenerationModes.Default, true);
 
                 _onSelect = onSelect;
             }
@@ -264,9 +277,18 @@ namespace SimpleDevToolbox.Client.Pages
 
                 if (toUpper)
                     result = result.ToUpper();
-
+                
                 return result;
             }
+        }
+
+        public enum GenerationModes
+        {
+            [Description("Uses the default .NET implementation for creating GUIDs")]
+            Default,
+
+            [Description("Creates cryptographically random GUIDs")]
+            Cryptographic
         }
     }
 
