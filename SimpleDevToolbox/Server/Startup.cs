@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SimpleDevToolbox.Shared.Services;
 
 namespace SimpleDevToolbox.Server
 {
@@ -31,6 +32,8 @@ namespace SimpleDevToolbox.Server
                   })
               .AddBootstrapProviders()
               .AddFontAwesomeIcons();
+
+            services.AddScoped<HeadStateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +56,7 @@ namespace SimpleDevToolbox.Server
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

@@ -1,14 +1,14 @@
-﻿using Blazorise;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.JSInterop;
-using SimpleDevToolbox.Client.Support;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Blazorise;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
+using SimpleDevToolbox.Client.Support;
 
 namespace SimpleDevToolbox.Client.Pages
 {
@@ -26,7 +26,6 @@ namespace SimpleDevToolbox.Client.Pages
 
         [Inject]
         INotificationService NotificationService { get; set; }
-
 
         public Guids()
         {

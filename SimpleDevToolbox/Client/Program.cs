@@ -3,6 +3,8 @@ using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using SimpleDevToolbox.Shared.Services;
 
 namespace SimpleDevToolbox.Client
 {
@@ -21,7 +23,8 @@ namespace SimpleDevToolbox.Client
                   options.ChangeTextOnKeyPress = true;
               })
               .AddBootstrapProviders()
-              .AddFontAwesomeIcons();
+              .AddFontAwesomeIcons()
+              .AddScoped<HeadStateService>();
 
             await builder.Build().RunAsync();
         }

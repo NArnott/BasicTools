@@ -1,6 +1,5 @@
 ﻿@page "/guids"
 
-
 <h1>Create GUIDs</h1>
 
 <div class="row">
@@ -14,7 +13,7 @@
                 {
                     var id = $"mode_{mode}";
 
-                    <div class="form-check form-check-inline" data-toggle="tooltip" title="@SimpleDevToolbox.Shared.StaticHelpers.GetDescription(mode)">
+                    <div class="form-check form-check-inline" data-toggle="tooltip" title="@mode.GetDescription()">
                         <InputRadio class="form-check-input" Value="mode" id="@id" />
                         <label class="form-check-label" for="@id">@mode.ToString()</label>
                     </div>

@@ -1,0 +1,17 @@
+﻿@inject HeadStateService HeadState
+
+<!--Whatever tags you want-->
+<title>@HeadState.Title</title>
+<meta name="description" content="@HeadState.MetaDescription" />
+<meta name="keywords" content="@HeadState.MetaKeywords" />
+
+@code { 
+
+    protected override void OnInitialized()
+    {
+        HeadState.StateChanged += () =>
+        {
+            InvokeAsync(StateHasChanged);
+        };
+    }
+}
