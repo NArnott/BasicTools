@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 
-namespace SimpleDevToolbox.Shared.Services
+namespace BasicTools.Shared.Services
 {
     public class HeadStateService
     {
-        const string SITE_TITLE = "Simple Dev Toolbox";
+        const string SITE_TITLE = "Basic Dev Tools";
 
         static Dictionary<string, PageMetadata> Metadata { get; }
 
@@ -22,7 +22,7 @@ namespace SimpleDevToolbox.Shared.Services
                 [""] = new PageMetadata()
                 {
                     Title = null,
-                    MetaDescription = "A simple set of free, online tools to help out developers",
+                    MetaDescription = "A basic set of free, online tools to help out developers",
                 },
                 ["guids"] = new PageMetadata()
                 {

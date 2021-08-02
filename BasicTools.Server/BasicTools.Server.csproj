@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\SimpleDevToolbox.Client.csproj" />
-    <ProjectReference Include="..\Shared\SimpleDevToolbox.Shared.csproj" />
+    <ProjectReference Include="..\BasicTools.Client\BasicTools.Client.csproj" />
+    <ProjectReference Include="..\BasicTools.Shared\BasicTools.Shared.csproj" />
   </ItemGroup>
 
 

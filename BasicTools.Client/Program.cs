@@ -4,9 +4,9 @@ using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using SimpleDevToolbox.Shared.Services;
+using BasicTools.Shared.Services;
 
-namespace SimpleDevToolbox.Client
+namespace BasicTools.Client
 {
     public class Program
     {

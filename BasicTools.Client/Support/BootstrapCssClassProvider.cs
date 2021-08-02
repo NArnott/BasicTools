@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace SimpleDevToolbox.Client.Support
+namespace BasicTools.Client.Support
 {
     class BootstrapCssClassProvider : FieldCssClassProvider
     {

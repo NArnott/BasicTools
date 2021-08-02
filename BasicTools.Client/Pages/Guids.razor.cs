@@ -8,9 +8,9 @@ using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
-using SimpleDevToolbox.Client.Support;
+using BasicTools.Client.Support;
 
-namespace SimpleDevToolbox.Client.Pages
+namespace BasicTools.Client.Pages
 {
     partial class Guids
     {

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31424.327
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDevToolbox.Server", "SimpleDevToolbox\Server\SimpleDevToolbox.Server.csproj", "{F64A2594-6BC2-4185-9248-DDBE5C5E51AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicTools.Server", "BasicTools.Server\BasicTools.Server.csproj", "{F64A2594-6BC2-4185-9248-DDBE5C5E51AD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDevToolbox.Client", "SimpleDevToolbox\Client\SimpleDevToolbox.Client.csproj", "{99312558-9DC4-4E5C-ADCE-90A71C3E4F80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicTools.Client", "BasicTools.Client\BasicTools.Client.csproj", "{99312558-9DC4-4E5C-ADCE-90A71C3E4F80}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleDevToolbox.Shared", "SimpleDevToolbox\Shared\SimpleDevToolbox.Shared.csproj", "{F441313B-79ED-4438-AB4B-CFC0FF1EAEFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicTools.Shared", "BasicTools.Shared\BasicTools.Shared.csproj", "{F441313B-79ED-4438-AB4B-CFC0FF1EAEFE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C272F39D-5680-4C08-BE8F-2BA2D36577EA}"
 	ProjectSection(SolutionItems) = preProject

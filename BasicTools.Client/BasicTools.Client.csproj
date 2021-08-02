@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\SimpleDevToolbox.Shared.csproj" />
+    <ProjectReference Include="..\BasicTools.Shared\BasicTools.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

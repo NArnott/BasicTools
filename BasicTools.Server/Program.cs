@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace SimpleDevToolbox.Server
+namespace BasicTools.Server
 {
     public class Program
     {
