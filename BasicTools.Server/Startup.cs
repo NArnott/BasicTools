@@ -51,7 +51,7 @@ namespace BasicTools.Server
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection(); THIS IS NOT NEEDED SINCE THE AWS LOAD BALANCER IS HANDLING HTTPS REDIRECTION
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
