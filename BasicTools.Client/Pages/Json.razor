@@ -1,0 +1,26 @@
+﻿@page "/json"
+
+<h1>Json Parsing</h1>
+
+<LayoutSetter>
+    <RightSidebar>
+        <h3>Instructions</h3>
+        <p>Paste a JSON document into the Input field and click the Process button.</p>
+        <p>If the JSON document is <strong>valid</strong>, a fully formatted json document will appear in the Output.</p>
+        <p>If the JSON document is <strong>not valid</strong>, the parsing error will be displayed.</p>
+    </RightSidebar>
+</LayoutSetter>
+
+<div class="row" style="height: calc(100vh - 100px)">
+    <div class="col-xl-5" style="height: 100%">
+        <h3>Input</h3>
+        <textarea @bind="Input" class="form-control code" style="width: 100%; height: calc(100% - 50px); resize: none" spellcheck="false" />
+    </div>
+    <div class="col-xl-2">
+        <button class="btn btn-primary" style="width: 100%; margin-top: 75px" @onclick="Process">Process -></button>
+    </div>
+    <div class="col-xl-5" style="height: 100%">
+        <h3>Output</h3>
+        <textarea @bind="Output" class="form-control code@(OutputIsError ? " is-invalid" : "")" style="width: 100%; height: calc(100% - 50px); resize: none" readonly />
+    </div>
+</div>

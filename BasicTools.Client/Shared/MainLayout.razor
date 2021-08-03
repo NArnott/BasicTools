@@ -1,17 +1,48 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <div class="main">
-        @*<div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-        </div>*@
-
-        <div class="content px-4">
-            @Body
+<CascadingValue Value="this">
+    <div class="page">
+        <div class="sidebar">
+            <NavMenu />
         </div>
+
+        <div class="main">
+            @*<div class="top-row px-4">
+                    <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+                </div>*@
+
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+
+        @if (_rightSidebar != null)
+        {
+            <div class="sidebar text-white p-2">
+                @_rightSidebar
+            </div>
+        }
     </div>
-</div>
+</CascadingValue>
+
+@code {
+    private RenderFragment _rightSidebar;
+
+    public void SetRenderFragments(RenderFragment rightSidebar)
+    {
+        _rightSidebar = rightSidebar;
+        StateHasChanged();
+    }
+
+    public void ClearRenderFragments(RenderFragment rightSidebar)
+    {
+        InvokeAsync(() =>
+        {
+            if (_rightSidebar == rightSidebar)
+            {
+                _rightSidebar = null;
+                StateHasChanged();
+            }
+        });
+    }
+}

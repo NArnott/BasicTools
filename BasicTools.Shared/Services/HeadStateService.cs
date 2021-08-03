@@ -27,8 +27,14 @@ namespace BasicTools.Shared.Services
                 ["guids"] = new PageMetadata()
                 {
                     Title = "GUIDs",
-                    MetaDescription = "Create GUIDs",
-                    MetaKeywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid, globally unique identifier, universal unique identifier, java guid, java uuid, C# guid, C# uuid, globally unique identifier, unique identifier"
+                    MetaDescription = "Generate GUID/UUID values",
+                    MetaKeywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid, globally unique identifier, universal unique identifier, java guid, java uuid, C# guid, C# uuid, globally unique identifier, unique identifier, tool, free"
+                },
+                ["json"] = new PageMetadata()
+                {
+                    Title = "Json",
+                    MetaDescription = "Parse, Validate and Format Json documents",
+                    MetaKeywords = "JSON, javascript object notation, parser, format, online, tool, free"
                 }
             };
         }
