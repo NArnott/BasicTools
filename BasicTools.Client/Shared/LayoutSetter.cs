@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace BasicTools.Client.Shared
 {
-    public class LayoutSetter : ComponentBase, IDisposable
+    public sealed class LayoutSetter : ComponentBase, IDisposable
     {
         [CascadingParameter]
         MainLayout Layout { get; set; }

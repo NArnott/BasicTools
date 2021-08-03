@@ -19,7 +19,7 @@ namespace BasicTools.Client.Pages
 
         private GuidModel[] _guids;
 
-        private ExampleTemplate[] _exampleTemplates;
+        private readonly ExampleTemplate[] _exampleTemplates;
 
         [Inject]
         IJSRuntime JSRuntime { get; set; }
