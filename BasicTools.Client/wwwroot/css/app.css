@@ -6,6 +6,18 @@
     font-family: monospace;
 }
 
+.sidebar a {
+    color: deepskyblue;
+}
+
+.sidebar hr {
+    background-color: white;
+}
+
+.sidebar ul {
+    padding-left: 20px;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
