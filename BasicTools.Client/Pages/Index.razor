@@ -4,6 +4,55 @@
 
 <p>Your one-stop shop for basic, online developer tools!</p>
 
-<p>This site is an <a href="https://github.com/NArnott/BasicTools" target="gitRepo">open source project</a> hosted on GitHub. Contributions are welcome!</p>
+<div class="row">
+    @foreach (var tool in _tools)
+    {
+    <div class="col-xl-3 col-lg-4 col-md-6 mb-2 d-flex align-items-stretch" >
+        <div class="card">
+            <div class="card-header">
+                <Icon IconSize="IconSize.x2" Class="mr-2" Name="@tool.FAIcon" />
+                <span class="h4">@tool.Title</span>
+            </div>
+            <div class="card-body">
+                <p class="card-text">@tool.Description</p>
+            </div>
+            <div class="card-footer text-right">
+                <NavLink href="@tool.NavLink" class="btn btn-primary">Use Tool</NavLink>
+            </div>
+        </div>
+    </div>
+    }
+</div>
 
-@*<SurveyPrompt Title="How is Blazor working for you?" />*@
+<p class="mt-4">This site is an <a href="https://github.com/NArnott/BasicTools" target="gitRepo">open source project</a> hosted on GitHub. Contributions are welcome!</p>
+
+@code {
+
+    Tool[] _tools = new[] {
+        new Tool()
+        {
+            Title = "GUID Generation",
+            Description = "Generate GUID/UUID values and output to various format using templates.",
+            NavLink = "guids",
+            FAIcon = "fa-atom"
+        },
+        new Tool()
+        {
+            Title = "Json Parsing",
+            Description = "Parse, Validate and Format Json documents.",
+            NavLink = "guids",
+            FAIcon = IconName.Code
+        }
+    };
+
+    class Tool
+    {
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public string NavLink { get; set; }
+
+        public object FAIcon { get; set; }
+    }
+} 
