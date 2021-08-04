@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BasicTools.Shared.Services;
+using BasicTools.Client;
 
 namespace BasicTools.Server
 {
@@ -23,6 +24,8 @@ namespace BasicTools.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMemoryCache();
+
             services.AddRazorPages();
 
             services
@@ -59,6 +62,7 @@ namespace BasicTools.Server
             
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapSitemap(typeof(App).Assembly);
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToPage("/_Host");
             });
