@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Components;
 
 namespace BasicTools.Shared.Services
@@ -9,28 +7,23 @@ namespace BasicTools.Shared.Services
     {
         const string SITE_TITLE = "Basic Dev Tools";
 
-        private readonly Dictionary<string, PageMetadataAttribute> _pageMetadata;        
+        private readonly RouteSourceAssemblyProvider _routeSourceAssemblyProvider;
 
         public PageDataProvider(
             RouteSourceAssemblyProvider routeSourceAssemblyProvider,
             NavigationManager navigationManager
             )
         {
-            _pageMetadata = (from route in routeSourceAssemblyProvider.PageRoutes
-                            let pageMetaAttrib = (PageMetadataAttribute)Attribute.GetCustomAttribute(route.PageType, typeof(PageMetadataAttribute))
-                            where pageMetaAttrib != null
-                            select new { route.RouteAttribute, pageMetaAttrib }
-                            ).ToDictionary(x => x.RouteAttribute.Template, x => x.pageMetaAttrib);
+            _routeSourceAssemblyProvider = routeSourceAssemblyProvider;
 
             navigationManager.LocationChanged += (sender, args) => OnLocationChanged(navigationManager.ToBaseRelativePath(args.Location));
 
             OnLocationChanged(navigationManager.ToBaseRelativePath(navigationManager.Uri));
         }
 
-
         private void OnLocationChanged(string location)
         {
-            if (_pageMetadata.TryGetValue("/" + location, out var metadataAttrib))
+            if (_routeSourceAssemblyProvider.PageMetadata.TryGetValue("/" + location, out var metadataAttrib))
             {
                 if (String.IsNullOrEmpty(metadataAttrib.Title))
                     Title = SITE_TITLE;

@@ -1,4 +1,6 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inject RouteSourceAssemblyProvider RouteSources 
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Basic Dev Tools</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -12,16 +14,15 @@
                 <Icon Name="IconName.Home" /> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="guids">
-                <Icon Name="@("fa-atom")" /> GUID Generation
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="json">
-                <Icon Name="IconName.Code" /> Json Parsing
-            </NavLink>
-        </li>
+
+        @foreach (var tool in RouteSources.ToolPages)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="@tool.Key">
+                    <Icon Name="@tool.Value.FaIcon" /> @tool.Value.Name
+                </NavLink>
+            </li>
+        }
     </ul>
 </div>
 
