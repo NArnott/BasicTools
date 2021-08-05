@@ -6,8 +6,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BasicTools.Shared.Services;
 using BasicTools.Client;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Routing;
+using BasicTools.Shared;
 
 namespace BasicTools.Server
 {
@@ -27,7 +29,7 @@ namespace BasicTools.Server
             services.AddMemoryCache();
 
             services.AddRazorPages();
-
+            
             services
               .AddBlazorise(options =>
               {
@@ -36,7 +38,7 @@ namespace BasicTools.Server
               .AddBootstrapProviders()
               .AddFontAwesomeIcons();
 
-            services.AddScoped<HeadStateService>();
+            services.AddSharedServices(typeof(App).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,15 +1,20 @@
-﻿@inject HeadStateService HeadState
+﻿@inject PageDataProvider PageData
 
-<!--Whatever tags you want-->
-<title>@HeadState.Title</title>
-<meta name="description" content="@HeadState.MetaDescription" />
-<meta name="keywords" content="@HeadState.MetaKeywords" />
+<title>@PageData.Title</title>
+@if (PageData.MetaDescription != null)
+{
+<meta name="description" content="@PageData.MetaDescription" /> 
+}
+@if (PageData.MetaKeywords != null)
+{
+<meta name="keywords" content="@PageData.MetaKeywords" />
+}
 
 @code { 
 
     protected override void OnInitialized()
     {
-        HeadState.StateChanged += () =>
+        PageData.PageChanged += () =>
         {
             InvokeAsync(StateHasChanged);
         };

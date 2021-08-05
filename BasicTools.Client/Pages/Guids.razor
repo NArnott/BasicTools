@@ -1,4 +1,9 @@
 ﻿@page "/guids"
+@attribute [PageMetadata( 
+Title = "GUID Generation",
+Description = "Generate GUID/UUID values",
+Keywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid, globally unique identifier, universal unique identifier, java guid, java uuid, C# guid, C# uuid, globally unique identifier, unique identifier, tool, free"
+)]
 
 <h1>GUID / UUID Generation</h1>
 
@@ -9,7 +14,7 @@
             <li><strong>Default:</strong><br />Creates GUIDs using the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.guid.newguid" target="msRef">default .NET implementation</a> for creating GUIDs (ex: <span class="code">Guid.NewGuid()</span>)</li>
             <li><strong>Cryptographic:</strong><br />Creates GUIDs using the <a href="https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.randomnumbergenerator.getbytes" target="msRef">.NET's Random Number Generator</a> to obtain 16 random bytes and <a href="https://docs.microsoft.com/en-us/dotnet/api/system.guid.-ctor#System_Guid__ctor_System_Byte___" target="msRef">constructing a GUID</a> from it.</li>
         </ul>
-        
+
         <hr />
 
         <h3>What is a GUID?</h3>
@@ -57,12 +62,12 @@
 
         <h3>Example Templates</h3>
 
-        @foreach(var exTemp in _exampleTemplates)
+        @foreach (var exTemp in _exampleTemplates)
         {
             <div class="card mt-2">
                 <div class="card-header">
                     @exTemp.Name
-                    @if(exTemp.Hint != null)
+                    @if (exTemp.Hint != null)
                     {
                         <Icon Class="ml-1" data-toggle="tooltip" title="@exTemp.Hint" Name="IconName.QuestionCircle" />
                     }

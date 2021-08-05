@@ -1,4 +1,9 @@
 ﻿@page "/"
+@attribute [PageMetadata(
+Description = "A basic set of free, online tools to help out developers",
+Keywords = "online tool, free, dev tools"
+)]
+
 
 <h1>Basic Dev Toolbox</h1>
 
@@ -7,20 +12,20 @@
 <div class="row">
     @foreach (var tool in _tools)
     {
-    <div class="col-xl-3 col-lg-4 col-md-6 mb-2 d-flex align-items-stretch" >
-        <div class="card">
-            <div class="card-header">
-                <Icon IconSize="IconSize.x2" Class="mr-2" Name="@tool.FAIcon" />
-                <span class="h4">@tool.Title</span>
-            </div>
-            <div class="card-body">
-                <p class="card-text">@tool.Description</p>
-            </div>
-            <div class="card-footer text-right">
-                <NavLink href="@tool.NavLink" class="btn btn-primary">Use Tool</NavLink>
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-2 d-flex align-items-stretch">
+            <div class="card">
+                <div class="card-header">
+                    <Icon IconSize="IconSize.x2" Class="mr-2" Name="@tool.FAIcon" />
+                    <span class="h4">@tool.Title</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@tool.Description</p>
+                </div>
+                <div class="card-footer text-right">
+                    <NavLink href="@tool.NavLink" class="btn btn-primary">Use Tool</NavLink>
+                </div>
             </div>
         </div>
-    </div>
     }
 </div>
 

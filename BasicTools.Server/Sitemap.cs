@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using System.Text;
+using BasicTools.Shared.Services;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Caching.Memory;
@@ -15,11 +14,14 @@ namespace BasicTools.Server
     {
         public static void MapSitemap(this IEndpointRouteBuilder endpoints, params Assembly[] sourceAssemblies)
         {
-            var memCache = endpoints.ServiceProvider.GetRequiredService<IMemoryCache>();
+            var sp = endpoints.ServiceProvider;
+
+            var memCache = sp.GetRequiredService<IMemoryCache>();
+            var routeSources = sp.GetRequiredService<RouteSourceAssemblyProvider>();
 
             endpoints.MapGet("/sitemap", async context =>
             {
-                var sitemap = memCache.GetOrCreate("sitemap", _ => GenerateSitemap(sourceAssemblies));
+                var sitemap = memCache.GetOrCreate("sitemap", _ => GenerateSitemap(sourceAssemblies, routeSources));
 
                 context.Response.ContentType = "text/plain";
 
@@ -27,19 +29,13 @@ namespace BasicTools.Server
             });
         }
 
-        static string GenerateSitemap(Assembly[] sourceAssemblies)
+        static string GenerateSitemap(Assembly[] sourceAssemblies, RouteSourceAssemblyProvider routeSources)
         {
-            var routeAttributes = from assembly in sourceAssemblies
-                                  from type in assembly.ExportedTypes
-                                  from attrib in (RouteAttribute[])Attribute.GetCustomAttributes(type, typeof(RouteAttribute))
-                                  where type.IsSubclassOf(typeof(ComponentBase))
-                                  select attrib;
-
             var sb = new StringBuilder();
 
-            foreach (var route in routeAttributes)
+            foreach (var (_, routeAttribute) in routeSources.PageRoutes.OrderBy(x => x.RouteAttribute.Template))
             {
-                sb.AppendLine($"https://basictools.dev{route.Template}");
+                sb.AppendLine($"https://basictools.dev{routeAttribute.Template}");
             }
 
             return sb.ToString();

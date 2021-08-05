@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using BasicTools.Client.Support;
 using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
-using BasicTools.Client.Support;
 
 namespace BasicTools.Client.Pages
 {
@@ -41,7 +41,7 @@ namespace BasicTools.Client.Pages
                     _editContext.NotifyValidationStateChanged();
                 });
             }
-
+            
             _exampleTemplates = new[]
             {
                 CreateTemplate("Standard GUID with hyphens", "{0}"),

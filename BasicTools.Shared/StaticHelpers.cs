@@ -12,7 +12,7 @@ namespace BasicTools.Shared
             var enumMember = value.GetType().GetMember(value.ToString()).FirstOrDefault();
             var descriptionAttribute =
                 enumMember == null
-                    ? default(DescriptionAttribute)
+                    ? default
                     : enumMember.GetCustomAttribute(typeof(DescriptionAttribute)) as DescriptionAttribute;
             return
                 descriptionAttribute == null

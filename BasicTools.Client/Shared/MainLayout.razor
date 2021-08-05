@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
 
 <CascadingValue Value="this">
     <div class="page">
@@ -28,14 +29,22 @@
 @code {
     private RenderFragment _rightSidebar;
 
+    private bool _disposed = false;
+
     public void SetRenderFragments(RenderFragment rightSidebar)
     {
+        if (_disposed)
+            return;
+
         _rightSidebar = rightSidebar;
         StateHasChanged();
     }
 
     public void ClearRenderFragments(RenderFragment rightSidebar)
     {
+        if (_disposed)
+            return;
+
         InvokeAsync(() =>
         {
             if (_rightSidebar == rightSidebar)
@@ -44,5 +53,10 @@
                 StateHasChanged();
             }
         });
+    }
+
+    public void Dispose()
+    {
+        _disposed = true;
     }
 }
