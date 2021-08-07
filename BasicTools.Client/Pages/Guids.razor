@@ -35,7 +35,7 @@ Keywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid,
                 {
                     var id = $"mode_{mode}";
 
-                    <div class="form-check form-check-inline" data-toggle="tooltip" title="@mode.GetDescription()">
+                    <div class="form-check form-check-inline" title="@mode.GetDescription()">
                         <InputRadio class="form-check-input" Value="mode" id="@id" />
                         <label class="form-check-label" for="@id">@mode.ToString()</label>
                     </div>
@@ -69,7 +69,7 @@ Keywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid,
                         <span class="align-self-center">@exTemp.Name</span>
                         @if (exTemp.Hint != null)
                         {
-                            <Icon Class="ms-1 align-self-center" data-toggle="tooltip" title="@exTemp.Hint" Name="help" Style="IconStyles.TwoTone" />
+                            <Icon Class="ms-1 align-self-center" title="@exTemp.Hint" Name="help" Style="IconStyles.TwoTone" />
                         }
                     </span>
                     <button class="btn btn-sm btn-outline-info" @onclick="exTemp.Select">Use</button>
