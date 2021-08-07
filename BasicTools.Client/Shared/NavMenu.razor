@@ -11,7 +11,7 @@
     <ul class="nav flex-column">
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                @*<Icon Name="IconName.Home" />*@ Home
+                <Icon Name="home" Class="me-1" /> Home
             </NavLink>
         </li>
 
@@ -19,7 +19,7 @@
         {
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="@tool.Key">
-                    @*<Icon Name="@tool.Value.FaIcon" />*@ @tool.Value.Name
+                    <Icon Name="@tool.Value.Icon" Class="me-1" /> @tool.Value.Name
                 </NavLink>
             </li>
         }
