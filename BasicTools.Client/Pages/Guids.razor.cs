@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using BasicTools.Client.Support;
-using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -24,8 +23,8 @@ namespace BasicTools.Client.Pages
         [Inject]
         IJSRuntime JSRuntime { get; set; }
 
-        [Inject]
-        INotificationService NotificationService { get; set; }
+        //[Inject]
+        //INotificationService NotificationService { get; set; }
 
         public Guids()
         {
@@ -73,7 +72,7 @@ namespace BasicTools.Client.Pages
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", model.ToString());
 
-            await NotificationService.Info(model.ToString(), "Copied GUID to Clipboard");
+            //await NotificationService.Info(model.ToString(), "Copied GUID to Clipboard");
         }
 
         public async Task CopyAllGuids()
@@ -82,7 +81,7 @@ namespace BasicTools.Client.Pages
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", allGuids);
 
-            await NotificationService.Info("Copied all GUIDs to Clipboard");
+            //await NotificationService.Info("Copied all GUIDs to Clipboard");
 
             foreach (var guid in _guids) guid.MarkWasActive();
         }

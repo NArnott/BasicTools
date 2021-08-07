@@ -1,15 +1,10 @@
-using Blazorise;
-using Blazorise.Bootstrap;
-using Blazorise.Icons.FontAwesome;
+using BasicTools.Client;
+using BasicTools.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BasicTools.Client;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Routing;
-using BasicTools.Shared;
 
 namespace BasicTools.Server
 {
@@ -29,14 +24,6 @@ namespace BasicTools.Server
             services.AddMemoryCache();
 
             services.AddRazorPages();
-            
-            services
-              .AddBlazorise(options =>
-              {
-                  options.ChangeTextOnKeyPress = true; // optional
-                  })
-              .AddBootstrapProviders()
-              .AddFontAwesomeIcons();
 
             services.AddSharedServices(typeof(App).Assembly);
         }
