@@ -30,7 +30,7 @@ Keywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid,
             <DataAnnotationsValidator />
 
             <InputRadioGroup @bind-Value="_createGuidModel.GenerationMode">
-                <span class="mr-3">Generation Mode:</span>
+                <span class="me-3">Generation Mode:</span>
                 @foreach (var mode in (GenerationModes[])Enum.GetValues(typeof(GenerationModes)))
                 {
                     var id = $"mode_{mode}";
@@ -46,9 +46,7 @@ Keywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid,
                 <label for="createGuidCount">Specify how many GUIDs you want to create (1-250)</label>
                 <div class="input-group">
                     <InputNumber id="createGuidCount" class="form-control" @bind-Value="_createGuidModel.CreateGuidCount" />
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-primary" type="submit">Create Guid(s)</button>
-                    </div>
+                    <button class="btn btn-outline-primary" type="submit">Create Guid(s)</button>
                 </div>
                 <ValidationMessage class="invalid-feedback" For="() => _createGuidModel.CreateGuidCount" />
             </div>
@@ -66,13 +64,15 @@ Keywords = "guid, uuid, guid generator, uuid generator, online guid, onlineguid,
         @foreach (var exTemp in _exampleTemplates)
         {
             <div class="card mt-2">
-                <div class="card-header">
-                    @exTemp.Name
-                    @if (exTemp.Hint != null)
-                    {
-                        @*<Icon Class="ml-1" data-toggle="tooltip" title="@exTemp.Hint" Name="IconName.QuestionCircle" />*@
-                    }
-                    <button class="btn btn-sm btn-outline-info float-right" @onclick="exTemp.Select">Use</button>
+                <div class="card-header d-flex justify-content-between">
+                    <span class="d-inline-flex">
+                        <span class="align-self-center">@exTemp.Name</span>
+                        @if (exTemp.Hint != null)
+                        {
+                            <Icon Class="ms-1 align-self-center" data-toggle="tooltip" title="@exTemp.Hint" Name="help" Style="IconStyles.TwoTone" />
+                        }
+                    </span>
+                    <button class="btn btn-sm btn-outline-info" @onclick="exTemp.Select">Use</button>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">@exTemp.Template</h5>
