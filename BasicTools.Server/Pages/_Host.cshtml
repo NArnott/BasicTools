@@ -2,7 +2,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
-<html>
+<html class="h-100" style="overflow-y: hidden">
 
 <head>
     <meta charset="utf-8" />
@@ -37,7 +37,7 @@
     </environment>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
     <component type="typeof(BasicTools.Client.App)" render-mode="WebAssemblyPrerendered" />
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>

@@ -1,0 +1,5 @@
+﻿textarea {
+    width: 100%;
+    resize: none;
+    height: calc(100% - 4rem);
+}

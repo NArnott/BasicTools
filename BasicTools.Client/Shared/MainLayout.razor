@@ -2,28 +2,29 @@
 @implements IDisposable
 
 <CascadingValue Value="this">
-    <div class="page">
-        <div class="sidebar">
+
+    <div class="d-flex flex-row" style="height: calc(100vh - 3.5rem)">
+        <div class="h-100">
             <NavMenu />
         </div>
 
-        <div class="main">
-            @*<div class="top-row px-4">
-                    <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-                </div>*@
-
-            <div class="content px-4">
-                @Body
-            </div>
-        </div>
+        <main class="container-fluid flex-fill pb-3" style="overflow-y:auto;">
+            @Body
+        </main>
 
         @if (_rightSidebar != null)
         {
-            <div class="sidebar text-white p-2">
+            <div style="width:450px; overflow-y:auto;" class="p-3 text-white bg-dark">
                 @_rightSidebar
             </div>
         }
     </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container-fluid">
+            <span class="text-muted">This site is an <a href="https://github.com/NArnott/BasicTools" target="gitRepo">open source project</a> hosted on GitHub. Contributions are welcome!</span>
+        </div>
+    </footer>
 </CascadingValue>
 
 @code {
