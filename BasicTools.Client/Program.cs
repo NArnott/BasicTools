@@ -1,7 +1,9 @@
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using BasicTools.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+
+[assembly: InternalsVisibleTo("BasicTools.Tests")]
 
 namespace BasicTools.Client
 {

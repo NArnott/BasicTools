@@ -6,10 +6,11 @@ using BasicTools.Bootstrap.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
+using YamlDotNet.Core;
 
 namespace BasicTools.Client.Pages
 {
-    partial class Json
+    partial class Yaml
     {
         [Inject]
         IJSRuntime JSRuntime { get; set; }
@@ -17,9 +18,10 @@ namespace BasicTools.Client.Pages
         [Inject]
         IToastService ToastService { get; set; }
 
-        static readonly YamlDotNet.Serialization.Serializer _yaml = new();
+        static readonly YamlDotNet.Serialization.Deserializer _yamlDeserializer = new();
+        static readonly YamlDotNet.Serialization.Serializer _yamlSerializer = new();
 
-        public string Input { get; set; } = @"{""test"":""value""}";
+        public string Input { get; set; } = "test: value";
 
         public string Output { get; set; }
 
@@ -27,7 +29,7 @@ namespace BasicTools.Client.Pages
 
         public bool WrapOutput { get; private set; }
 
-        JsonOutputModes OutputMode { get; set; } = JsonOutputModes.Json;
+        YamlOutputModes OutputMode { get; set; } = YamlOutputModes.Yaml;
 
         public void Process()
         {
@@ -38,21 +40,11 @@ namespace BasicTools.Client.Pages
 
             try
             {
-                document = JsonConvert.DeserializeObject<ExpandoObject>(Input);
+                document = _yamlDeserializer.Deserialize<ExpandoObject>(Input);
             }
-            catch (JsonSerializationException ex)
-            {
-                Output = ex.Message.Replace("ExpandoObject", "document");
-                OutputIsError = true;
-            }
-            catch (JsonException ex)
+            catch (YamlException ex)
             {
                 Output = ex.Message;
-                OutputIsError = true;
-            }
-            catch (InvalidCastException)
-            {
-                Output = "Invalid JSON document";
                 OutputIsError = true;
             }
 
@@ -60,16 +52,16 @@ namespace BasicTools.Client.Pages
             {
                 Output = OutputMode switch
                 {
-                    JsonOutputModes.Json => JsonConvert.SerializeObject(document, Formatting.Indented),
-                    JsonOutputModes.JsonMinified => JsonConvert.SerializeObject(document),
-                    JsonOutputModes.Yaml => _yaml.Serialize(document),
-                    JsonOutputModes.Xml => XmlExpandoSerializer.Serialize(document, System.Xml.Formatting.Indented),
-                    JsonOutputModes.XmlMinified => XmlExpandoSerializer.Serialize(document, System.Xml.Formatting.None),
+                    YamlOutputModes.Json => JsonConvert.SerializeObject(document, Formatting.Indented),
+                    YamlOutputModes.JsonMinified => JsonConvert.SerializeObject(document),
+                    YamlOutputModes.Yaml => _yamlSerializer.Serialize(document),
+                    YamlOutputModes.Xml => XmlExpandoSerializer.Serialize(document, System.Xml.Formatting.Indented),
+                    YamlOutputModes.XmlMinified => XmlExpandoSerializer.Serialize(document, System.Xml.Formatting.None),
                     _ => throw new NotImplementedException(),
                 };
             }
 
-            WrapOutput = OutputIsError || OutputMode == JsonOutputModes.JsonMinified || OutputMode == JsonOutputModes.XmlMinified;
+            WrapOutput = OutputIsError || OutputMode == YamlOutputModes.JsonMinified || OutputMode == YamlOutputModes.XmlMinified;
         }
 
         async Task CopyOutput()
@@ -80,14 +72,14 @@ namespace BasicTools.Client.Pages
         }
     }
 
-    public enum JsonOutputModes
+    public enum YamlOutputModes
     {
+        Yaml,
+
         Json,
 
         [Description("Json (Minified)")]
         JsonMinified,
-
-        Yaml,
 
         [Description("XML")]
         Xml,
