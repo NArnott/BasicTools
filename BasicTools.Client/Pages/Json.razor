@@ -38,10 +38,11 @@ Keywords = "JSON, javascript object notation, parser, format, online, tool, free
     </div>
     <div class="col-xl-5">
         <span class="d-flex">
-            <span class="h3 me-auto">Output</span>
+            <span class="h3 me-2">Output</span>
             @if (Output != null && !OutputIsError)
-            { 
-                <small class="align-self-end">Size: @Output.Length</small> 
+            {
+                <button Class="btn btn-sm btn-outline-secondary me-auto" style="padding: .05rem; margin: .20rem; border: none" title="Copy Output" @onclick="CopyOutput"><Icon Name="content_copy" /></button>
+                <small class="align-self-end">Size: @Output.Length</small>
             }
         </span>
         <textarea @bind="Output" class="form-control code @(OutputIsError ? "is-invalid" : "") @(WrapOutput ? "" : "disable-wrap")" readonly />
