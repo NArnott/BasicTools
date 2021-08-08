@@ -9,13 +9,13 @@ namespace BasicTools.Client.Pages
     {
         static readonly YamlDotNet.Serialization.Serializer _yaml = new();
 
-        string Input { get; set; } = @"{""test"":""value""}";
+        public string Input { get; set; } = @"{""test"":""value""}";
 
-        string Output { get; set; }
+        public string Output { get; set; }
 
-        bool OutputIsError { get; set; }
+        public bool OutputIsError { get; private set; }
 
-        bool WrapOutput { get; set; }
+        public bool WrapOutput { get; private set; }
 
         JsonOutputModes OutputMode { get; set; } = JsonOutputModes.Json;
 
@@ -35,9 +35,14 @@ namespace BasicTools.Client.Pages
                 Output = ex.Message.Replace("ExpandoObject", "document");
                 OutputIsError = true;
             }
-            catch(Exception ex)
+            catch (JsonException ex)
             {
                 Output = ex.Message;
+                OutputIsError = true;
+            }
+            catch (InvalidCastException)
+            {
+                Output = "Invalid JSON document";
                 OutputIsError = true;
             }
 
