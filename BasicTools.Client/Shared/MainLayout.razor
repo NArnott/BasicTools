@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @implements IDisposable
 
+
 <CascadingValue Value="this">
 
     <div class="d-flex flex-row" style="height: calc(100vh - 3.5rem)">
@@ -27,10 +28,22 @@
     </footer>
 </CascadingValue>
 
+<ToastContainer Defaults="ToastDefault">
+    <IconTemplate>
+        <Icon Name="@context.ToString()" />
+    </IconTemplate>
+</ToastContainer>
+
 @code {
     private RenderFragment _rightSidebar;
 
     private bool _disposed = false;
+
+    private ToastDefaults ToastDefault = new ToastDefaults()
+    {
+        HideOnNavigation = true,
+        AutoHideDelay = TimeSpan.FromSeconds(4)
+    };
 
     public void SetRenderFragments(RenderFragment rightSidebar)
     {

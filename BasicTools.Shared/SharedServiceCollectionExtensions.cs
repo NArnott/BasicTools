@@ -12,6 +12,8 @@ namespace BasicTools.Shared
             if (services is null)
                 throw new ArgumentNullException(nameof(services));
 
+            services.AddToastService();
+
             services.AddSingleton(new RouteSourceAssemblyProvider(sourceAssemblies));
             services.AddScoped<PageDataProvider>();
 
