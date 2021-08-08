@@ -19,7 +19,7 @@ Keywords = "JSON, javascript object notation, parser, format, online, tool, free
 
 <div class="row" style="height: calc(100% - 4rem)">
     <div class="col-xl-5">
-        <h3>Input</h3>
+        <span class="d-flex"><span class="h3 me-auto">Input</span><small class="align-self-end">Size: @Input.Length</small></span>
         <textarea @bind="Input" class="form-control code disable-wrap" spellcheck="false"  />
     </div>
     <div class="col-xl-2">
@@ -35,10 +35,15 @@ Keywords = "JSON, javascript object notation, parser, format, online, tool, free
         }
 
         <button class="btn btn-primary mt-3" style="width:100%;" @onclick="Process">Process</button>
-
     </div>
     <div class="col-xl-5">
-        <h3>Output</h3>
+        <span class="d-flex">
+            <span class="h3 me-auto">Output</span>
+            @if (Output != null && !OutputIsError)
+            { 
+                <small class="align-self-end">Size: @Output.Length</small> 
+            }
+        </span>
         <textarea @bind="Output" class="form-control code @(OutputIsError ? "is-invalid" : "") @(WrapOutput ? "" : "disable-wrap")" readonly />
     </div>
 </div>
