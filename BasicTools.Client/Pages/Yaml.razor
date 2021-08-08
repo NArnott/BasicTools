@@ -1,19 +1,19 @@
-﻿@page "/json"
+﻿@page "/yaml"
 @attribute [PageMetadata(
-Title = "Json",
-Description = "Parse, Validate and Format Json documents",
-Keywords = "JSON, javascript object notation, parser, format, online, tool, free"
+Title = "Yaml",
+Description = "Parse, Validate and Format Yaml documents",
+Keywords = "Yaml, parser, format, online, tool, free"
 )]
-@attribute [ToolPage("Json Processing", "Parse, Validate and Format Json documents.", "grading")]
+@attribute [ToolPage("Yaml Processing", "Parse, Validate and Format Yaml documents.", "grading")]
 
-<h1>Json Processing</h1>
+<h1>Yaml Processing</h1>
 
 <LayoutSetter>
     <RightSidebar>
         <h3>Instructions</h3>
-        <p>Paste a JSON document into the Input field and click the Process button.</p>
-        <p>If the JSON document is <strong>valid</strong>, a fully formatted json document will appear in the Output.</p>
-        <p>If the JSON document is <strong>not valid</strong>, the parsing error will be displayed.</p>
+        <p>Paste a Yaml document into the Input field and click the Process button.</p>
+        <p>If the Yaml document is <strong>valid</strong>, a fully formatted yaml document will appear in the Output.</p>
+        <p>If the Yaml document is <strong>not valid</strong>, the parsing error will be displayed.</p>
     </RightSidebar>
 </LayoutSetter>
 
@@ -24,7 +24,7 @@ Keywords = "JSON, javascript object notation, parser, format, online, tool, free
     </div>
     <div class="col-xl-2">
         <div class="mt-xl-5">Output To:</div>
-        @foreach (Enum value in Enum.GetValues(typeof(JsonOutputModes)))
+        @foreach (Enum value in Enum.GetValues(typeof(YamlOutputModes)))
         {
             <div class="form-check">
                 <input class="form-check-input" type="radio" value="@value" name="outputMode" id="output_mode_@value" checked="@OutputMode.Equals(value)" @onchange="OnOutputModeChanged">
@@ -52,6 +52,6 @@ Keywords = "JSON, javascript object notation, parser, format, online, tool, free
 @code {
     private void OnOutputModeChanged(ChangeEventArgs args)
     {
-        OutputMode = (JsonOutputModes)Enum.Parse(typeof(JsonOutputModes), (string)args.Value);
+        OutputMode = (YamlOutputModes)Enum.Parse(typeof(YamlOutputModes), (string)args.Value);
     }
 }
