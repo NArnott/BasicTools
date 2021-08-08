@@ -3,3 +3,9 @@
     resize: none;
     height: calc(100% - 4rem);
 }
+
+textarea.disable-wrap {
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
+}
