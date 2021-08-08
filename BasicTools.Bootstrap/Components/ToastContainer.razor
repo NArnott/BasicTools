@@ -1,0 +1,41 @@
+﻿<div class="toast-container p-3 position-absolute top-0 end-0" style="z-index: 99">
+    <CascadingValue Value="this">
+        @foreach (var toast in _toasts)
+        {
+            <Toast @key="toast" ToastDescriptor="toast" />
+        }
+    </CascadingValue>
+</div>
+
+@code {
+    [Inject]
+    private IToastService ToastService { get; set; }
+
+    [Parameter]
+    public RenderFragment<object> IconTemplate { get; set; }
+
+    [Parameter]
+    public ToastDefaults Defaults { get; set; } = new ToastDefaults();
+
+    private readonly List<ToastDescriptor> _toasts = new();
+
+    protected override void OnInitialized()
+    {
+        if (ToastService == null)
+            throw new InvalidOperationException();
+
+        ToastService.OnShow += Toast_OnShow;
+    }
+
+    private void Toast_OnShow(ToastDescriptor toast)
+    {
+        _toasts.Add(toast);
+        StateHasChanged();
+    }
+
+    internal void RemoveToast(ToastDescriptor toast)
+    {
+        _toasts.Remove(toast);
+        StateHasChanged();
+    }
+}

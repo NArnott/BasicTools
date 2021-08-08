@@ -1,38 +1,34 @@
-﻿@inject RouteSourceAssemblyProvider RouteSources 
+﻿@inject RouteSourceAssemblyProvider RouteSources
 
-<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">Basic Dev Tools</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <Icon Name="IconName.Home" /> Home
-            </NavLink>
-        </li>
-
-        @foreach (var tool in RouteSources.ToolPages)
-        {
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="@tool.Key">
-                    <Icon Name="@tool.Value.FaIcon" /> @tool.Value.Name
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark h-100" style="width: 280px;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <span class="fs-4">Basic Dev Tools</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <NavLink class="nav-link text-white d-flex" href="" Match="NavLinkMatch.All">
+                    <Icon Name="home" Class="me-2" Style="IconStyles.Outlined" /> Home
                 </NavLink>
             </li>
+            @foreach (var tool in RouteSources.ToolPages)
+            {
+                <li class="nav-item">
+                    <NavLink class="nav-link text-white d-flex" href="@tool.Key">
+                        <Icon Name="@tool.Value.Icon" Class="me-2" Style="IconStyles.Outlined" /> @tool.Value.Name
+                    </NavLink>
+                </li>
+            }
+        </ul>
+    </div>
+
+    @code {
+        private bool collapseNavMenu = true;
+
+        private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+        private void ToggleNavMenu()
+        {
+            collapseNavMenu = !collapseNavMenu;
         }
-    </ul>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
     }
-}

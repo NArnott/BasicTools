@@ -4,7 +4,7 @@ Title = "Json",
 Description = "Parse, Validate and Format Json documents",
 Keywords = "JSON, javascript object notation, parser, format, online, tool, free"
 )]
-@attribute [ToolPage("Json Parsing", "Parse, Validate and Format Json documents.", faIcon: IconName.Code)]
+@attribute [ToolPage("Json Parsing", "Parse, Validate and Format Json documents.", "grading")]
 
 <h1>Json Parsing</h1>
 
@@ -17,16 +17,16 @@ Keywords = "JSON, javascript object notation, parser, format, online, tool, free
     </RightSidebar>
 </LayoutSetter>
 
-<div class="row" style="height: calc(100vh - 100px)">
-    <div class="col-xl-5" style="height: 100%">
+<div class="row" style="height: calc(100% - 4rem)">
+    <div class="col-xl-5">
         <h3>Input</h3>
-        <textarea @bind="Input" class="form-control code" style="width: 100%; height: calc(100% - 50px); resize: none" spellcheck="false" />
+        <textarea @bind="Input" class="form-control code" spellcheck="false" />
     </div>
     <div class="col-xl-2">
-        <button class="btn btn-primary" style="width: 100%; margin-top: 75px" @onclick="Process">Process -></button>
+        <button class="btn btn-primary mt-xl-5" style="width:100%;" @onclick="Process">Process</button>
     </div>
-    <div class="col-xl-5" style="height: 100%">
+    <div class="col-xl-5">
         <h3>Output</h3>
-        <textarea @bind="Output" class="form-control code@(OutputIsError ? " is-invalid" : "")" style="width: 100%; height: calc(100% - 50px); resize: none" readonly />
+        <textarea @bind="Output" class="form-control code@(OutputIsError ? " is-invalid" : "")" readonly />
     </div>
 </div>

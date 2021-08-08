@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using BasicTools.Bootstrap.Services;
 using BasicTools.Client.Support;
-using Blazorise;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
@@ -25,7 +25,7 @@ namespace BasicTools.Client.Pages
         IJSRuntime JSRuntime { get; set; }
 
         [Inject]
-        INotificationService NotificationService { get; set; }
+        IToastService ToastService { get; set; }
 
         public Guids()
         {
@@ -73,8 +73,10 @@ namespace BasicTools.Client.Pages
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", model.ToString());
 
-            await NotificationService.Info(model.ToString(), "Copied GUID to Clipboard");
+            ToastService.ShowToast("Copied GUID to Clipboard", model.ToString(), "content_copy");
         }
+
+        IToastHandle _copiedAllGuidsToastHandle;
 
         public async Task CopyAllGuids()
         {
@@ -82,7 +84,9 @@ namespace BasicTools.Client.Pages
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", allGuids);
 
-            await NotificationService.Info("Copied all GUIDs to Clipboard");
+            _copiedAllGuidsToastHandle?.Dispose();
+
+            _copiedAllGuidsToastHandle = ToastService.ShowToast("Copied all GUIDs to Clipboard", "content_copy");
 
             foreach (var guid in _guids) guid.MarkWasActive();
         }

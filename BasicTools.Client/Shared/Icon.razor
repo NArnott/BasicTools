@@ -1,0 +1,40 @@
+﻿<span @attributes="OtherAttributes" class="@IconClass @Class" style="@SizeStyle @CssStyle">@Name</span>
+
+@code {
+    //Name sources: https://fonts.google.com/icons
+    [Parameter]
+    public string Name { get; set; }
+
+    [Parameter]
+    public string Class { get; set; }
+
+    [Parameter]
+    public string CssStyle { get; set; }
+
+    [Parameter]
+    public IconStyles Style { get; set; } = IconStyles.Filled;
+
+    [Parameter]
+    public IconSizes Size { get; set; } = IconSizes.Medium;
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> OtherAttributes { get; set; }
+
+    private string SizeStyle => $"font-size: {(byte)Size}px;";
+
+    private string IconClass
+    {
+        get
+        {
+            return Style switch
+            {
+                IconStyles.Filled => "material-icons",
+                IconStyles.Outlined => "material-icons-outlined",
+                IconStyles.Rounded => "material-icons-round",
+                IconStyles.Sharp => "material-icons-sharp",
+                IconStyles.TwoTone => "material-icons-two-tone",
+                _ => throw new InvalidCastException(),
+            };
+        }
+    }
+}

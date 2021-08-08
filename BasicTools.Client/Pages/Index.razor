@@ -10,23 +10,21 @@ Keywords = "online tool, free, dev tools"
 <p>Your one-stop shop for basic, online developer tools!</p>
 
 <div class="row">
-  @foreach (var tool in RouteSources.ToolPages)
-  {
-    <div class="col-xl-4 col-lg-6 mb-4 d-flex align-items-stretch">
-      <div class="card" style="width: 100%">
-        <div class="card-header">
-          <Icon IconSize="IconSize.x2" Class="mr-2" Name="@tool.Value.FaIcon" />
-          <span class="h4">@tool.Value.Name</span>
+    @foreach (var tool in RouteSources.ToolPages)
+    {
+        <div class="col-xxl-3 col-xl-4 col-lg-6 mb-4 d-flex align-items-stretch">
+            <div class="card" style="width: 100%">
+                <div class="card-header d-inline-flex">
+                    <Icon Class="me-2 align-self-center" Name="@tool.Value.Icon" Size="IconSizes.Large" Style="IconStyles.TwoTone" />
+                    <span class="h4 mb-0 align-self-center">@tool.Value.Name</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@tool.Value.Description</p>
+                </div>
+                <div class="card-footer text-end">
+                    <NavLink href="@tool.Key" class="btn btn-primary">Use Tool</NavLink>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <p class="card-text">@tool.Value.Description</p>
-        </div>
-        <div class="card-footer text-right">
-          <NavLink href="@tool.Key" class="btn btn-primary">Use Tool</NavLink>
-        </div>
-      </div>
-    </div>
-  }
+    }
 </div>
-
-<p class="mt-4">This site is an <a href="https://github.com/NArnott/BasicTools" target="gitRepo">open source project</a> hosted on GitHub. Contributions are welcome!</p>
