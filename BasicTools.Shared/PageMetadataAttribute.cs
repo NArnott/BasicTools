@@ -7,6 +7,8 @@ namespace BasicTools.Shared
     {
         public string Title { get; set; }
 
+        public bool IsCompleteTitle { get; set; }
+
         public string Description { get; set; }
 
         public string Keywords { get; set; }
