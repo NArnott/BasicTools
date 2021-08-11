@@ -1,0 +1,67 @@
+﻿@page "/json-yaml"
+@attribute [PageMetadata(
+Title = "Json & Yaml Validation and Formatting",
+Description = "Parse, Validate and Format Json and Yaml documents",
+Keywords = "JSON, Yaml, javascript object notation, parser, format, online, tool, free"
+)]
+@attribute [ToolPage("Json & Yaml Tools", "Parse, Validate and Format Json and Yaml documents.", "grading")]
+
+<h1>Json &amp; Yaml Processing</h1>
+
+<LayoutSetter>
+    <RightSidebar>
+        <h3>Instructions</h3>
+        <p>Paste a Json or Yaml document into the Input field, select an output format, and click the Process button.</p>
+        <p>If the document is <strong>valid</strong>, a fully formatted document will appear in the Output.</p>
+        <p>If the document is <strong>not valid</strong>, an error will be displayed.</p>
+    </RightSidebar>
+</LayoutSetter>
+
+<div class="row" style="height: calc(100% - 4rem)">
+    <div class="col-xl-5">
+        <span class="d-flex"><span class="h3 me-auto">Input</span><small class="align-self-end">Size: @Input.Length</small></span>
+        <textarea @bind="Input" class="form-control code disable-wrap input" spellcheck="false" />
+    </div>
+    <div class="col-xl-2">
+        <div class="mt-xl-5">Output Format:</div>
+        @foreach (Enum value in Enum.GetValues(typeof(JsonYamlOutputModes)))
+        {
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="@value" name="outputMode" id="output_mode_@value" checked="@OutputMode.Equals(value)" @onchange="OnOutputModeChanged">
+                <label class="form-check-label" for="output_mode_@value">
+                    @value.GetDescription()
+                </label>
+            </div>
+        }
+
+        <button class="btn btn-primary mt-3" style="width:100%;" @onclick="Process">Process</button>
+    </div>
+    <div class="col-xl-5">
+        <span class="d-flex">
+            <span class="h3 me-2">Output</span>
+            @if (Output.OutputText != null && !Output.IsError)
+            {
+                <button Class="btn btn-sm btn-outline-secondary me-auto" style="padding: .05rem; margin: .20rem; border: none" title="Copy Output" @onclick="CopyOutput"><Icon Name="content_copy" /></button>
+                <small class="align-self-end">Size: @Output.OutputText.Length</small>
+            }
+        </span>
+
+        @if (!Output.IsError && Output.Mode == JsonYamlOutputModes.Json)
+        {
+            <pre id="json-renderer" class="form-control code output"></pre>
+        }
+        else
+        {
+            <textarea @bind="Output.OutputText" class="form-control code output @(Output.IsError ? "is-invalid" : "") @(Output.WrapOutput ? "" : "disable-wrap")" readonly />
+        }
+            
+    </div>
+</div>
+
+
+@code {
+    private void OnOutputModeChanged(ChangeEventArgs args)
+    {
+        OutputMode = (JsonYamlOutputModes)Enum.Parse(typeof(JsonYamlOutputModes), (string)args.Value);
+    }
+}

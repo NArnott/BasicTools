@@ -1,4 +1,6 @@
-﻿.code {
+﻿@import "jquery.json-viewer.css";
+
+.code {
     font-family: monospace;
 }
 

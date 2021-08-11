@@ -7,13 +7,14 @@ namespace BasicTools.Shared
 {
     public static class SharedServiceCollectionExtensions
     {
-        public static IServiceCollection AddSharedServices(this IServiceCollection services, params Assembly[] sourceAssemblies)
+        public static IServiceCollection AddSharedServices(this IServiceCollection services, bool isServer, params Assembly[] sourceAssemblies)
         {
             if (services is null)
                 throw new ArgumentNullException(nameof(services));
 
             services.AddToastService();
 
+            services.AddSingleton(new HostType() { IsServer = isServer });
             services.AddSingleton(new RouteSourceAssemblyProvider(sourceAssemblies));
             services.AddScoped<PageDataProvider>();
 

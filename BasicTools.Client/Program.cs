@@ -18,7 +18,7 @@ namespace BasicTools.Client
 
             //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            services.AddSharedServices(typeof(App).Assembly);
+            services.AddSharedServices(false, typeof(App).Assembly);
 
             await builder.Build().RunAsync();
         }

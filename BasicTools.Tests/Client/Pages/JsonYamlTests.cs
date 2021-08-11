@@ -3,7 +3,7 @@
 namespace BasicTools.Client.Pages
 {
 
-    public class JsonTests
+    public class JsonYamlTests
     {
         [Theory]
         [InlineData("1")]
@@ -12,7 +12,7 @@ namespace BasicTools.Client.Pages
         public void ProcessErrorsAreHandled(string input)
         {
             //arrange
-            var sut = new Json
+            var sut = new JsonYaml
             {
                 Input = input
             };
@@ -21,7 +21,7 @@ namespace BasicTools.Client.Pages
             sut.Process();
 
             //assert
-            Assert.True(sut.OutputIsError);
+            Assert.True(sut.Output.IsError);
         }    
     }
 }

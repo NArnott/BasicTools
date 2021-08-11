@@ -25,7 +25,7 @@ namespace BasicTools.Server
 
             services.AddRazorPages();
 
-            services.AddSharedServices(typeof(App).Assembly);
+            services.AddSharedServices(true, typeof(App).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
