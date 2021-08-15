@@ -1,0 +1,12 @@
+﻿@page "/json"
+@page "/yaml"
+@attribute [RemoveFromSitemap]
+
+@inject NavigationManager NavManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavManager.NavigateTo("/json-yaml");
+    }
+}

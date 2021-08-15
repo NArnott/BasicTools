@@ -51,7 +51,10 @@ namespace BasicTools.Server
             
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapSitemap(typeof(App).Assembly);
+                endpoints.MapRedirect("/json", "/json-yaml");
+                endpoints.MapRedirect("/yaml", "/json-yaml");
+
+                endpoints.MapSitemap();
                 endpoints.MapRazorPages();
                 endpoints.MapFallbackToPage("/_Host");
             });
