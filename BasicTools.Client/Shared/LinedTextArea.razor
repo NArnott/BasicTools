@@ -1,0 +1,51 @@
+﻿@inject IJSRuntime JSRuntime
+@inject HostType HostType
+
+<div class="d-flex">
+    <canvas @ref="_canvasRef" width="48" class="me-2" />
+    <textarea @ref="_textAreaRef" @bind="Value" class="flex-fill form-control code @TextAreaCssClass" spellcheck="false" />
+</div>
+
+@code { 
+
+    ElementReference _canvasRef;
+    ElementReference _textAreaRef;
+
+    private string _value;
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (!String.Equals(_value, value))
+            {
+                _value = value;
+                ValueChanged.InvokeAsync(value);
+            }
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public string TextAreaCssClass { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (HostType.IsWasm && firstRender)
+        {
+            var linedTextAreaJs = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/scripts/lined-text-area.js");
+
+            await linedTextAreaJs.InvokeVoidAsync("initialize", _canvasRef, _textAreaRef);
+        }
+    }
+
+    private async Task OnInputChange(ChangeEventArgs args)
+    {
+        Value = (string)args.Value;
+        await ValueChanged.InvokeAsync(Value);
+    }
+}

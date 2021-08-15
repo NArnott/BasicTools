@@ -20,7 +20,8 @@ Keywords = "JSON, Yaml, javascript object notation, parser, format, online, tool
 <div class="row" style="height: calc(100% - 4rem)">
     <div class="col-xl-5">
         <span class="d-flex"><span class="h3 me-auto">Input</span><small class="align-self-end">Size: @Input.Length</small></span>
-        <textarea @bind="Input" class="form-control code disable-wrap input" spellcheck="false" />
+        @*<textarea @bind="Input" class="form-control code disable-wrap input" spellcheck="false" />*@
+        <LinedTextArea @bind-Value="Input" TextAreaCssClass="input" />
     </div>
     <div class="col-xl-2">
         <div class="mt-xl-5">Output Format:</div>

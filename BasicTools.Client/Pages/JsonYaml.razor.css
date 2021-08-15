@@ -1,4 +1,4 @@
-﻿.input, .output {
+﻿::deep .input, ::deep .output {
     width: 100%;
     resize: none;
     height: calc(100vh - 11rem);
