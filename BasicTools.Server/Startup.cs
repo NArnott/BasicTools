@@ -26,6 +26,8 @@ namespace BasicTools.Server
             services.AddRazorPages();
 
             services.AddSharedServices(true, typeof(App).Assembly);
+
+            services.AddWebOptimizer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +47,8 @@ namespace BasicTools.Server
 
             //app.UseHttpsRedirection(); THIS IS NOT NEEDED SINCE THE AWS LOAD BALANCER IS HANDLING HTTPS REDIRECTION
             app.UseBlazorFrameworkFiles();
+
+            app.UseWebOptimizer();
             app.UseStaticFiles();
 
             app.UseRouting();
