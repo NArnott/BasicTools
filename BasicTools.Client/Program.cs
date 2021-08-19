@@ -13,11 +13,7 @@ namespace BasicTools.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             var services = builder.Services;
-
-            //builder.RootComponents.Add<App>("#app");
-
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            
             services.AddSharedServices(false, typeof(App).Assembly);
 
             await builder.Build().RunAsync();

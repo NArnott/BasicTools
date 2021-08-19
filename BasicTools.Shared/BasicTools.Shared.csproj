@@ -9,10 +9,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="YamlDotNet" Version="11.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BasicTools.Bootstrap\BasicTools.Bootstrap.csproj" />
+    <PackageReference Include="MudBlazor" Version="5.1.0" />
   </ItemGroup>
 
   <ItemGroup>

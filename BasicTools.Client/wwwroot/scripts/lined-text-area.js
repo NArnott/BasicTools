@@ -10,9 +10,6 @@ export function initialize(canvas, textarea) {
 
         var ctx = canvas.getContext("2d");
 
-        ctx.fillStyle = style.backgroundColor;
-        ctx.fillRect(0, 0, 48, this.scrollHeight + 1);
-
         ctx.fillStyle = "#808080";
         ctx.font = style.fontSize + " monospace"; // NOTICE: must match TextArea font-size and lineheight !!!
         var startIndex = Math.floor(this.scrollTop / lineHeight, 0);

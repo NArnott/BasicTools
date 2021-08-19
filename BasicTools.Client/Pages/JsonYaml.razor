@@ -4,64 +4,69 @@ Title = "Json & Yaml Validation and Formatting",
 Description = "Parse, Validate and Format Json and Yaml documents",
 Keywords = "JSON, Yaml, javascript object notation, web based, parser, format, online, tool, free"
 )]
-@attribute [ToolPage("Json & Yaml Tools", "Parse, Validate and Format Json and Yaml documents.", "grading")]
+@attribute [ToolPage("Json & Yaml Tools", "Parse, Validate and Format Json and Yaml documents.", "Icons.Material.Outlined.Grading")]
 
-<h1>Json &amp; Yaml Processing</h1>
+<MudText Typo="Typo.h3">Json &amp; Yaml Processing</MudText>
 
 <LayoutSetter>
     <RightSidebar>
-        <h3>Overview</h3>
-        <p>Paste or enter a json or yaml document to validate and format it. You can even convert it to JSON, YAML, or XML.</p>
-        <p>Note that all the processing is done in your local browser. No data is passed to any server.</p>
-        <h3>Instructions</h3>
-        <p>Paste a Json or Yaml document into the Input field, select an output format, and click the Process button.</p>
-        <p>If the document is <strong>valid</strong>, a fully formatted document will appear in the Output.</p>
-        <p>If the document is <strong>not valid</strong>, an error will be displayed.</p>
+        <MudText Typo="Typo.h5">Overview</MudText>
+        <MudText>Paste or enter a json or yaml document to validate and format it. You can even convert it to JSON, YAML, or XML.</MudText>
+        <MudText>Note that all the processing is done in your local browser. No data is passed to any server.</MudText>
+        <MudText Typo="Typo.h5">Instructions</MudText>
+        <MudText>Paste a Json or Yaml document into the Input field, select an output format, and click the Process button.</MudText>
+        <MudText>If the document is <strong>valid</strong>, a fully formatted document will appear in the Output.</MudText>
+        <MudText>If the document is <strong>not valid</strong>, an error will be displayed.</MudText>
     </RightSidebar>
 </LayoutSetter>
 
-<div class="row" style="height: calc(100% - 4rem)">
-    <div class="col-xl-5">
-        <span class="d-flex"><span class="h3 me-auto">Input</span><small class="align-self-end">Size: @Input.Length</small></span>
-        @*<textarea @bind="Input" class="form-control code disable-wrap input" spellcheck="false" />*@
-        <LinedTextArea @bind-Value="Input" TextAreaCssClass="input" />
-    </div>
-    <div class="col-xl-2">
-        <div class="mt-xl-5">Output Format:</div>
-        @foreach (Enum value in Enum.GetValues(typeof(JsonYamlOutputModes)))
-        {
-            <div class="form-check">
-                <input class="form-check-input" type="radio" value="@value" name="outputMode" id="output_mode_@value" checked="@OutputMode.Equals(value)" @onchange="OnOutputModeChanged">
-                <label class="form-check-label" for="output_mode_@value">
-                    @value.GetDescription()
-                </label>
-            </div>
-        }
+<div>
+    <MudGrid>
+        <MudItem lg="5" xs="12">
+            <span class="d-flex">
+                <MudText Typo="Typo.h5" Class="me-auto">Input</MudText>
+                <MudText Typo="Typo.subtitle2" Class="align-self-end">Size: @Input.Length</MudText>
+            </span>
+            <LinedTextArea @bind-Value="Input" TextAreaCssClass="input" />
+        </MudItem>
 
-        <button class="btn btn-primary mt-3" style="width:100%;" @onclick="Process">Process</button>
-    </div>
-    <div class="col-xl-5">
-        <span class="d-flex">
-            <span class="h3 me-2">Output</span>
-            @if (Output.OutputText != null && !Output.IsError)
+        <MudItem lg="2" xs="12" Class="d-flex justify-center align-start">
+            <MudPaper Elevation="1" Class="pa-3 mt-lg-16">
+
+                <MudText Typo="Typo.h6" Align="Align.Center">Output Format</MudText>
+
+                <MudRadioGroup @bind-SelectedOption="OutputMode" Class="d-flex flex-column">
+                    @foreach (JsonYamlOutputModes value in Enum.GetValues(typeof(JsonYamlOutputModes)))
+                    {
+                        <MudRadio Option="@value" Dense="true">@value.GetDescription()</MudRadio>
+                    }
+                </MudRadioGroup>
+
+                <MudButton Class="mt-3" Color="Color.Primary" Variant="Variant.Filled" OnClick="Process" Style="width: 100%">Process</MudButton>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem lg="5" xs="12">
+            <span class="d-flex">
+                <MudText Typo="Typo.h5" Class="me-2">Output</MudText>
+                @if (Output.OutputText != null && !Output.IsError)
+                {
+                    <MudIconButton OnClick="CopyOutput" Icon="@Icons.Outlined.ContentCopy" Class="me-auto" Title="Copy Output" Size="Size.Small" />
+                    <MudText Typo="Typo.subtitle2" Class="align-self-end">Size: @Output.OutputText.Length</MudText>
+                }
+            </span>
+
+            @if (!Output.IsError && Output.Mode == JsonYamlOutputModes.Json)
             {
-                <button Class="btn btn-sm btn-outline-secondary me-auto" style="padding: .05rem; margin: .20rem; border: none" title="Copy Output" @onclick="CopyOutput"><Icon Name="content_copy" /></button>
-                <small class="align-self-end">Size: @Output.OutputText.Length</small>
+                <pre id="json-renderer" class="code output"></pre>
             }
-        </span>
-
-        @if (!Output.IsError && Output.Mode == JsonYamlOutputModes.Json)
-        {
-            <pre id="json-renderer" class="form-control code output"></pre>
-        }
-        else
-        {
-            <textarea @bind="Output.OutputText" class="form-control code output @(Output.IsError ? "is-invalid" : "") @(Output.WrapOutput ? "" : "disable-wrap")" readonly />
-        }
-            
-    </div>
+            else
+            {
+                <textarea @bind="Output.OutputText" class="code output @(Output.IsError ? "is-invalid" : "") @(Output.WrapOutput ? "" : "disable-wrap")" readonly />
+            }
+        </MudItem>
+    </MudGrid>
 </div>
-
 
 @code {
     private void OnOutputModeChanged(ChangeEventArgs args)

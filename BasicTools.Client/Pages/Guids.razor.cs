@@ -1,22 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BasicTools.Bootstrap.Services;
-using BasicTools.Client.Support;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
+using MudBlazor;
 
 namespace BasicTools.Client.Pages
 {
     partial class Guids
     {
-        private readonly CreateGuidModel _createGuidModel = new();
-        private readonly EditContext _editContext;
-
         private GuidModel[] _guids;
 
         private readonly ExampleTemplate[] _exampleTemplates;
@@ -25,20 +19,43 @@ namespace BasicTools.Client.Pages
         IJSRuntime JSRuntime { get; set; }
 
         [Inject]
-        IToastService ToastService { get; set; }
+        ISnackbar ToastService { get; set; }
+
+        public int CreateGuidCount { get; set; } = 1;
+
+        string _template;
+
+        public string Template
+        {
+            get => _template;
+            set
+            {
+                _template = value;
+
+                Sample = new GuidModel(value, 1, GenerationModes.Default, true);
+            }
+        }
+
+        public bool IsTemplateValid(string value)
+        {
+            return Sample.IsValid;
+        }
+
+        public GenerationModes GenerationMode { get; set; }
+
+        public GuidModel Sample { get; private set; }
 
         public Guids()
         {
-            _editContext = new EditContext(_createGuidModel);
-            _editContext.SetFieldCssClassProvider(new BootstrapCssClassProvider());
-            
+            Template = "{0}";
+
             ExampleTemplate CreateTemplate(string name, string template, string hint = null)
             {
                 return new ExampleTemplate(name, template, hint, t =>
                 {
-                    _createGuidModel.Template = t;
+                    Template = t;
 
-                    _editContext.NotifyValidationStateChanged();
+                    _form.Validate();
                 });
             }
             
@@ -53,16 +70,24 @@ namespace BasicTools.Client.Pages
             };
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                //for some reason, Mud Radio buttons don't validate the default value, so we have to set it after the fact
+                GenerationMode = GenerationModes.Default;
+                _form.Validate();
+            }
+        }
+
         private void CreateGuids()
         {
-            _guids = new GuidModel[_createGuidModel.CreateGuidCount];
+            _guids = new GuidModel[CreateGuidCount];
 
-            for (int i = 0; i < _createGuidModel.CreateGuidCount; i++)
+            for (int i = 0; i < CreateGuidCount; i++)
             {
-                _guids[i] = new GuidModel(_createGuidModel.Template, i + 1, _createGuidModel.GenerationMode, false);
+                _guids[i] = new GuidModel(Template, i + 1, GenerationMode, false);
             }
-            
-            _editContext.MarkAsUnmodified();
         }
 
         public async Task SelectGuid(GuidModel model)
@@ -73,10 +98,8 @@ namespace BasicTools.Client.Pages
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", model.ToString());
 
-            ToastService.ShowToast("Copied GUID to Clipboard", model.ToString(), "content_copy");
+            ToastService.Add($"Copied {model} to Clipboard", configure: x => x.Icon = Icons.Filled.ContentCopy);
         }
-
-        IToastHandle _copiedAllGuidsToastHandle;
 
         public async Task CopyAllGuids()
         {
@@ -84,9 +107,7 @@ namespace BasicTools.Client.Pages
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", allGuids);
 
-            _copiedAllGuidsToastHandle?.Dispose();
-
-            _copiedAllGuidsToastHandle = ToastService.ShowToast("Copied all GUIDs to Clipboard", "content_copy");
+            ToastService.Add("Copied all GUIDs to Clipboard", configure: x => x.Icon = Icons.Filled.ContentCopy);
 
             foreach (var guid in _guids) guid.MarkWasActive();
         }
@@ -97,16 +118,21 @@ namespace BasicTools.Client.Pages
 
             private static readonly Guid _sampleGuid = Guid.Parse("00000000-aaaa-ffff-9999-000000000000");
 
-            private readonly string _template;
-            private readonly int _index;
-            private readonly Guid _guid;
+            private readonly string _output;
 
             public GuidModel(string template, int index, GenerationModes genMode, bool sampleGuid)
             {
-                _template = template;
-                _index = index;
 
-                _guid = sampleGuid ? _sampleGuid : CreateGuid(genMode);
+                var guid = sampleGuid ? _sampleGuid : CreateGuid(genMode);
+
+                try
+                {
+                    _output = FormatString(template, guid, index);
+                }
+                catch
+                {
+                    _output = null;
+                }
             }
 
             static Guid CreateGuid(GenerationModes genMode)
@@ -143,78 +169,21 @@ namespace BasicTools.Client.Pages
 
             bool _wasActive;
 
-
             public bool WasActive => _wasActive && !_isActive;
+
 
             public void MarkWasActive() => _wasActive = true;
 
+            public bool IsValid => _output != null;
+
             public override string ToString()
             {
-                try
-                {
-                    return FormatString(_template, _guid, _index);
-                }
-                catch
-                {
-                    return "Invalid Template";
-                }
+                return _output;
             }
 
-            public static string FormatString(string template, Guid guid, int index)
+            static string FormatString(string template, Guid guid, int index)
             {
                 return String.Format(CustomGuidFormatter.Instance, template, guid, index);
-            }
-        }
-
-        public class CreateGuidModel
-        {
-            public CreateGuidModel()
-            {
-                Template = "{0}";
-            }
-
-            [Required]
-            [Range(1, 250)]
-            public int CreateGuidCount { get; set; } = 1;
-
-            string _template;
-
-            [Required]
-            [MaxLength(250)]
-            [ValidateTemplate]
-            public string Template
-            {
-                get => _template;
-                set
-                {
-                    _template = value;
-
-                    Sample = new GuidModel(value, 1, GenerationModes.Default, true);
-                }
-            }
-
-
-            public GenerationModes GenerationMode { get; set; } = GenerationModes.Default;
-
-            public GuidModel Sample { get; private set; }
-        }
-
-        public class ValidateTemplateAttribute : ValidationAttribute
-        {
-            public ValidateTemplateAttribute() : base("Invalid Template") { }
-
-            public override bool IsValid(object value)
-            {
-                try
-                {
-                    GuidModel.FormatString((string)value, Guid.Empty, 0);
-                }
-                catch
-                {
-                    return false;
-                }
-
-                return true;
             }
         }
 
@@ -287,6 +256,8 @@ namespace BasicTools.Client.Pages
 
         public enum GenerationModes
         {
+            NoSet,
+
             [Description("Uses the default .NET implementation for creating GUIDs")]
             Default,
 

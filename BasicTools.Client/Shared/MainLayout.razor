@@ -1,76 +1,34 @@
 ﻿@inherits LayoutComponentBase
 @implements IDisposable
 
+<MudThemeProvider Theme="DefaultTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-<CascadingValue Value="this">
-
-    <div class="d-flex flex-row" style="height: calc(100vh - 3.5rem)">
-        <div class="h-100">
-            <NavMenu />
-        </div>
-
-        <main class="container-fluid flex-fill pb-3" style="overflow-y:auto;">
-            @Body
-        </main>
-
-        @if (_rightSidebar != null)
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="NavDrawerToggle" />
+        <MudText Typo="Typo.h5" Class="ml-3 pa-0">Basic Dev Tools</MudText>
+        <MudSpacer />
+        @if (_pageInfoContents != null)
         {
-            <div style="width:450px; overflow-y:auto;" class="p-3 text-white bg-dark">
-                @_rightSidebar
-            </div>
+            <MudToggleIconButton Icon="@Icons.Material.Filled.Assistant" ToggledIcon="@Icons.Material.Outlined.Assistant" Color="Color.Inherit" Edge="Edge.End" @bind-Toggled="@PageInfoDrawerOpen" Title="Toggle Page Info" />
         }
-    </div>
-
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container-fluid">
-            <span class="text-muted">This site is an <a href="https://github.com/NArnott/BasicTools" target="gitRepo">open source project</a> hosted on GitHub. Contributions are welcome!</span>
-        </div>
-    </footer>
-</CascadingValue>
-
-<ToastContainer Defaults="ToastDefault">
-    <IconTemplate>
-        <Icon Name="@context.ToString()" />
-    </IconTemplate>
-</ToastContainer>
-
-@code {
-    private RenderFragment _rightSidebar;
-
-    private bool _disposed = false;
-
-    private ToastDefaults ToastDefault = new ToastDefaults()
-    {
-        HideOnNavigation = true,
-        AutoHideDelay = TimeSpan.FromSeconds(4)
-    };
-
-    public void SetRenderFragments(RenderFragment rightSidebar)
-    {
-        if (_disposed)
-            return;
-
-        _rightSidebar = rightSidebar;
-        StateHasChanged();
-    }
-
-    public void ClearRenderFragments(RenderFragment rightSidebar)
-    {
-        if (_disposed)
-            return;
-
-        InvokeAsync(() =>
-        {
-            if (_rightSidebar == rightSidebar)
-            {
-                _rightSidebar = null;
-                StateHasChanged();
-            }
-        });
-    }
-
-    public void Dispose()
-    {
-        _disposed = true;
-    }
-}
+    </MudAppBar>
+    <MudDrawer @bind-Open="@_navDrawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <NavMenu />
+        <MudSpacer />
+        <MudText Class="ma-3">This site is an <MudLink Href="https://github.com/NArnott/BasicTools" Target="gitRepo">open source project</MudLink> hosted on GitHub. Contributions are welcome!</MudText>
+    </MudDrawer>
+    <MudDrawer @bind-Open="PageInfoDrawerOpen" Anchor="Anchor.Right" ClipMode="DrawerClipMode.Always" Elevation="2" Class="pa-3" Width="350px">
+        @_pageInfoContents
+    </MudDrawer>
+    <MudMainContent Style="position: relative">
+        <MudContainer MaxWidth="MaxWidth.False">
+            <CascadingValue Value="this">
+                @Body
+            </CascadingValue>
+        </MudContainer>
+        <MudIconButton Icon="@Icons.Filled.OpenInFull" Class="d-none d-md-flex" Style="position: absolute; right: 5px; top: 70px;" OnClick="FullExpand" Title="Full Screen" />
+    </MudMainContent>
+</MudLayout>

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Dynamic;
-using System.Threading.Tasks;
-using BasicTools.Bootstrap.Services;
-using BasicTools.Shared.Services;
+using System.Threading.Tasks;using BasicTools.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using MudBlazor;
 using Newtonsoft.Json;
 using YamlDotNet.Core;
 
@@ -17,7 +16,7 @@ namespace BasicTools.Client.Pages
         IJSRuntime JSRuntime { get; set; }
 
         [Inject]
-        IToastService ToastService { get; set; }
+        ISnackbar ToastService { get; set; }
 
         [Inject]
         HostType HostType { get; set; }
@@ -105,7 +104,7 @@ namespace BasicTools.Client.Pages
         {
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Output.OutputText);
 
-            ToastService.ShowToast("Copied Output to Clipboard", "content_copy");
+            ToastService.Add("Copied Output to Clipboard", configure: x => x.Icon = Icons.Filled.ContentCopy);
         }
 
         public class OutputResult

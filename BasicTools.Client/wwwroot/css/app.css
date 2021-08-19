@@ -4,6 +4,38 @@
     font-family: monospace;
 }
 
+/* Code in text */
+p > code,
+li > code,
+dd > code,
+td > code {
+    color: hotpink;
+    word-wrap: break-word;
+    box-decoration-break: clone;
+    padding: .1rem .3rem .2rem;
+    border-radius: .2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding-bottom: .75rem;
+}
+
+p, ul, ol {
+    padding-bottom: .5rem;
+}
+
+.mud-list-item-text p {
+    padding: 0 0 0 0;
+}
+
+.mud-list-item.active {
+    background-color: lightpink;
+}
+
+.mud-list-item.was-active {
+    background-color: lightgray;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
