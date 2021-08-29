@@ -2,14 +2,30 @@
 @attribute [PageMetadata(
 Title = "Base 64 Conversion",
 Description = "Convert text from/to Base64",
-Keywords = "base 64, base64, conversion, web based, online base64, tool, free"
+Keywords = "base 64, base64, conversion, encoding, decoding, web based, online base64, tool, free"
 )]
-@attribute [ToolPage("Base 64 Conversion", "Convert text to and from Base 64.", "Icons.Material.Outlined.TextSnippet")]
+@attribute [ToolPage("Base 64 Encoding", "Convert data to and from Base64 encoding.", "Icons.Material.Outlined.TextSnippet")]
 @inject ISnackbar ToastService
 @inject IJSRuntime JSRuntime
 @using System.Text
 
-<MudText Typo="Typo.h3">Base 64 Conversion</MudText>
+<MudText Typo="Typo.h3">Base 64 Encoding / Decoding</MudText>
+
+<LayoutSetter>
+    <RightSidebar>
+        <MudText Typo="Typo.h5">Overview</MudText>
+        <MudText>Convert data to and from Base 64 encoding. Paste an encoded or unencoded version on the Input side, and then press the appropriate button to either encode or decode from/to Base64.</MudText>
+
+        <MudText Typo="Typo.h5">What is Base64?</MudText>
+        <MudText>When you have some data that you want to ship across a network, you generally don't do it by just streaming the bits and bytes over the wire in a raw format. Why? because some media are made for streaming text. You never know -- some protocols may interpret your binary data as control characters (like a modem), or your binary data could be screwed up because the underlying protocol might think that you've entered a special character combination (like how FTP translates line endings).</MudText>
+        <MudText>So to get around this, people encode the binary data into characters. Base64 is one of these types of encodings.</MudText>
+        <MudText>    
+            Why 64?
+            Because you can generally rely on the same 64 characters being present in many character sets, and you can be reasonably confident that your data's going to end up on the other side of the wire uncorrupted.
+            <MudLink Href="https://en.wikipedia.org/wiki/Base64" Target="WhatIsBase64" Typo="Typo.subtitle2" Class="ms-auto"><small>(See Wikipedia)</small></MudLink>
+        </MudText>
+    </RightSidebar>
+</LayoutSetter>
 
 <div>
     <MudGrid>
