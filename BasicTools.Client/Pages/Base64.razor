@@ -1,0 +1,85 @@
+﻿@page "/base64"
+@attribute [PageMetadata(
+Title = "Base 64 Conversion",
+Description = "Convert text from/to Base64",
+Keywords = "base 64, base64, conversion, web based, online base64, tool, free"
+)]
+@attribute [ToolPage("Base 64 Conversion", "Convert text to and from Base 64.", "Icons.Material.Outlined.TextSnippet")]
+@inject ISnackbar ToastService
+@inject IJSRuntime JSRuntime
+@using System.Text
+
+<MudText Typo="Typo.h3">Base 64 Conversion</MudText>
+
+<div>
+    <MudGrid>
+        <MudItem lg="5" xs="12">
+            <span class="d-flex">
+                <MudText Typo="Typo.h5" Class="me-auto">Input</MudText>
+                <MudText Typo="Typo.subtitle2" Class="align-self-end">Size: @Input.Length</MudText>
+            </span>
+            <LinedTextArea @bind-Value="Input" TextAreaCssClass="input" Placeholder="Type or paste input..." />
+        </MudItem>
+
+        <MudItem lg="2" xs="12" Class="justify-center align-start mt-lg-16">
+            <MudButton Class="mt-3" Color="Color.Primary" Variant="Variant.Filled" OnClick="Encode" Style="width: 100%">Encode</MudButton>
+            <MudButton Class="mt-3" Color="Color.Primary" Variant="Variant.Filled" OnClick="Decode" Style="width: 100%">Decode</MudButton>
+        </MudItem>
+
+        <MudItem lg="5" xs="12">
+            <span class="d-flex">
+                <MudText Typo="Typo.h5" Class="me-2">Output</MudText>
+                @if (Output.Length > 0)
+                {
+                    <MudIconButton OnClick="CopyOutput" Icon="@Icons.Outlined.ContentCopy" Class="me-auto" Title="Copy Output" Size="Size.Small" />
+                    <MudText Typo="Typo.subtitle2" Class="align-self-end">Size: @Output.Length</MudText>
+                }
+            </span>
+
+            <LinedTextArea @bind-Value="Output" TextAreaCssClass="output" IsReadOnly="true" />
+        </MudItem>
+    </MudGrid>
+</div>
+
+@code {
+    string Input { get; set; } = "";
+
+    string Output { get; set; } = "";
+
+    void Encode()
+    {
+        try
+        {
+            var bytes = Encoding.UTF8.GetBytes(Input);
+
+            Output = Convert.ToBase64String(bytes);
+        }
+        catch (Exception ex)
+        {
+            ToastService.Add($"Failed to encode text: {ex.Message}", Severity.Error);
+            Output = "";
+        }
+    }
+
+    void Decode()
+    {
+        try
+        {
+            var bytes = Convert.FromBase64String(Input);
+
+            Output = Encoding.UTF8.GetString(bytes);
+        }
+        catch (Exception ex)
+        {
+            ToastService.Add($"Failed to decode text: {ex.Message}", Severity.Error);
+            Output = "";
+        }
+    }
+
+    async Task CopyOutput()
+    {
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", Output);
+
+        ToastService.Add("Copied Output to Clipboard", configure: x => x.Icon = Icons.Filled.ContentCopy);
+    }
+}

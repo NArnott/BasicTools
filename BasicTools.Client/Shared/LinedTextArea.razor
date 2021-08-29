@@ -3,7 +3,7 @@
 
 <div class="d-flex">
     <canvas @ref="_canvasRef" width="48" class="me-2" />
-    <textarea @ref="_textAreaRef" @bind="Value" class="flex-fill code @TextAreaCssClass" spellcheck="false" />
+    <textarea @ref="_textAreaRef" @bind="Value" class="flex-fill code @TextAreaCssClass" spellcheck="false" readonly="@IsReadOnly" placeholder="@Placeholder" />
 </div>
 
 @code { 
@@ -32,6 +32,12 @@
 
     [Parameter]
     public string TextAreaCssClass { get; set; }
+
+    [Parameter]
+    public string Placeholder { get; set; }
+
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {

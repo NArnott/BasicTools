@@ -1,0 +1,17 @@
+﻿::deep .input, ::deep .output {
+    width: 100%;
+    resize: none;
+    height: calc(100vh - 12.5rem);
+    background: white;
+    border: 1px solid black;
+}
+
+::deep textarea.input, ::deep textarea.output {
+    padding: 5px;
+}
+
+textarea.disable-wrap {
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
+}
