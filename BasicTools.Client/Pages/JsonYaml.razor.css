@@ -15,3 +15,8 @@ textarea.disable-wrap {
     overflow-wrap: normal;
     overflow-x: scroll;
 }
+
+#json-renderer {
+    overflow-x: scroll;
+    overflow-y: scroll;
+}

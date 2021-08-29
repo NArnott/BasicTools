@@ -48,7 +48,10 @@ namespace BasicTools.Server
             //app.UseHttpsRedirection(); THIS IS NOT NEEDED SINCE THE AWS LOAD BALANCER IS HANDLING HTTPS REDIRECTION
             app.UseBlazorFrameworkFiles();
 
+#if !DEBUG
             app.UseWebOptimizer();
+#endif
+            
             app.UseStaticFiles();
 
             app.UseRouting();

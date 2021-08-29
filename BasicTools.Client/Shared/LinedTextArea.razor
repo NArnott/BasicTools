@@ -2,7 +2,7 @@
 @inject HostType HostType
 
 <div class="d-flex">
-    <canvas @ref="_canvasRef" width="48" class="me-2" />
+    <canvas @ref="_canvasRef" width="48" />
     <textarea @ref="_textAreaRef" @bind="Value" class="flex-fill code @TextAreaCssClass" spellcheck="false" readonly="@IsReadOnly" placeholder="@Placeholder" />
 </div>
 

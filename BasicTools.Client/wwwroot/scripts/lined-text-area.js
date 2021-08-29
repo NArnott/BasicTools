@@ -10,6 +10,9 @@ export function initialize(canvas, textarea) {
 
         var ctx = canvas.getContext("2d");
 
+        ctx.fillStyle = "#FAFAFA";
+        ctx.fillRect(0, 0, 48, this.scrollHeight + 1);
+
         ctx.fillStyle = "#808080";
         ctx.font = style.fontSize + " monospace"; // NOTICE: must match TextArea font-size and lineheight !!!
         var startIndex = Math.floor(this.scrollTop / lineHeight, 0);
@@ -17,7 +20,7 @@ export function initialize(canvas, textarea) {
         for (var i = startIndex; i < endIndex; i++) {
             var ph = lineHeight - this.scrollTop + (i * lineHeight);
             var text = '' + (1 + i);  // line number
-            ctx.fillText(text, 38 - (text.length * 10), ph);
+            ctx.fillText(text, 38 - (text.length * 8), ph);
         }
     }
 
