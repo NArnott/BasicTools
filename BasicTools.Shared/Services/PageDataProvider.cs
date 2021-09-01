@@ -27,10 +27,8 @@ namespace BasicTools.Shared.Services
             {
                 if (String.IsNullOrEmpty(metadataAttrib.Title))
                     Title = SITE_TITLE;
-                else if (metadataAttrib.IsCompleteTitle)
-                    Title = metadataAttrib.Title;
                 else
-                    Title = $"{metadataAttrib.Title} - {SITE_TITLE}";
+                    Title = metadataAttrib.Title;
 
                 MetaDescription = metadataAttrib.Description;
                 MetaKeywords = metadataAttrib.Keywords;
