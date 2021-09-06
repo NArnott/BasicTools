@@ -38,7 +38,7 @@ namespace BasicTools.Client.Shared
             }
         }
 
-        private RenderFragment _pageInfoContents;
+        private RenderFragment? _pageInfoContents;
 
         #endregion
 
@@ -56,22 +56,14 @@ namespace BasicTools.Client.Shared
             }
         }
 
-        private bool _disposed = false;
-
         public void SetRenderFragments(RenderFragment pageInfoContents)
         {
-            if (_disposed)
-                return;
-
             _pageInfoContents = pageInfoContents;
             StateHasChanged();
         }
 
         public void ClearRenderFragments(RenderFragment pageInfoContents)
         {
-            if (_disposed)
-                return;
-
             InvokeAsync(() =>
             {
                 if (_pageInfoContents == pageInfoContents)
@@ -80,11 +72,6 @@ namespace BasicTools.Client.Shared
                     StateHasChanged();
                 }
             });
-        }
-
-        public void Dispose()
-        {
-            _disposed = true;
         }
     }
 }

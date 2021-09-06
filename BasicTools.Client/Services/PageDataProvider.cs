@@ -43,12 +43,12 @@ namespace BasicTools.Client.Services
             PageChanged?.Invoke();
         }
 
-        public event Action PageChanged;
+        public event Action? PageChanged;
 
-        public string Title { get; private set; }
+        public string? Title { get; private set; }
 
-        public string MetaDescription { get; private set; }
+        public string? MetaDescription { get; private set; }
 
-        public string MetaKeywords { get; private set; }
+        public string? MetaKeywords { get; private set; }
     }
 }

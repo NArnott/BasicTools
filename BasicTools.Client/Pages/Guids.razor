@@ -112,9 +112,9 @@ Keywords = "guid, guidgen, uuid, guid generator, uuid generator, web based, onli
 
 @code {
     bool _formIsValid;
-    MudForm _form;
+    MudForm _form = default!;
 
-    MudDialog _templatesDialog;
+    MudDialog _templatesDialog = default!;
 
     private void ShowTemplatesDialog()
     {

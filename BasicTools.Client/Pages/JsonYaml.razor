@@ -71,6 +71,9 @@ Keywords = "JSON, Yaml, javascript object notation, web based, parser, format, o
 @code {
     private void OnOutputModeChanged(ChangeEventArgs args)
     {
+        if (args.Value == null)
+            throw new InvalidOperationException("args.Value is null");
+
         OutputMode = (JsonYamlOutputModes)Enum.Parse(typeof(JsonYamlOutputModes), (string)args.Value);
     }
 }

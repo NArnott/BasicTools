@@ -11,10 +11,10 @@
     ElementReference _canvasRef;
     ElementReference _textAreaRef;
 
-    private string _value;
+    private string? _value;
 
     [Parameter]
-    public string Value
+    public string? Value
     {
         get => _value;
         set
@@ -31,10 +31,10 @@
     public EventCallback<string> ValueChanged { get; set; }
 
     [Parameter]
-    public string TextAreaCssClass { get; set; }
+    public string? TextAreaCssClass { get; set; }
 
     [Parameter]
-    public string Placeholder { get; set; }
+    public string? Placeholder { get; set; }
 
     [Parameter]
     public bool IsReadOnly { get; set; }
@@ -51,7 +51,7 @@
 
     private async Task OnInputChange(ChangeEventArgs args)
     {
-        Value = (string)args.Value;
+        Value = (string)(args.Value ?? "");
         await ValueChanged.InvokeAsync(Value);
     }
 }

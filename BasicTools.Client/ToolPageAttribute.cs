@@ -21,7 +21,7 @@ class ToolPageAttribute : Attribute
     public string Description { get; }
     public string Icon { get; }
 
-    public string GetMudIcon()
+    public string? GetMudIcon()
     {
         if (Icon == null)
             return null;
@@ -46,9 +46,9 @@ class ToolPageAttribute : Attribute
                 if (newObj is Type)
                     curObj = newObj;
                 else if (newObj is FieldInfo fieldInfo)
-                    curObj = fieldInfo.GetValue(null);
+                    curObj = fieldInfo.GetValue(null) ?? throw new InvalidOperationException("No Field Value Provided");
                 else if (newObj is PropertyInfo propInfo)
-                    return () => (string)propInfo.GetValue(curObj);
+                    return () => (string)(propInfo.GetValue(curObj) ?? throw new InvalidOperationException("No Property Value Provided"));
             }
 
             throw new InvalidOperationException("Icon not found.");
