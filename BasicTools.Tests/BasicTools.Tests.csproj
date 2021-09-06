@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BasicTools.Client\BasicTools.Client.csproj" />
-    <ProjectReference Include="..\BasicTools.Server\BasicTools.Server.csproj" />
   </ItemGroup>
 
 </Project>
