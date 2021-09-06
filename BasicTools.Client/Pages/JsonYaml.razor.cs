@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Dynamic;
-using System.Threading.Tasks;using BasicTools.Shared.Services;
+using BasicTools.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -42,7 +41,7 @@ namespace BasicTools.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            if (HostType.IsWasm)
+            if (!HostType.IsPreRender)
             {
                 await JSRuntime.InvokeVoidAsync("import", "/scripts/jquery.json-viewer.js");
 
@@ -52,10 +51,10 @@ namespace BasicTools.Client.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (HostType.IsWasm 
-                && Output.Mode == JsonYamlOutputModes.Json 
+            if (!HostType.IsPreRender
+                && Output.Mode == JsonYamlOutputModes.Json
                 && !Output.IsError
-                && Output.OutputText != null 
+                && Output.OutputText != null
                 && !Output.HasBeenRendered
                 )
             {

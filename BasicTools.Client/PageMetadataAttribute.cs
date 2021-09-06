@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace BasicTools.Shared
+namespace BasicTools.Client
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
-    public class PageMetadataAttribute : Attribute
+    class PageMetadataAttribute : Attribute
     {
         public string Title { get; set; }
 

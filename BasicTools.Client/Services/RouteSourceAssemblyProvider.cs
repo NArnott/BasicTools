@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using Microsoft.AspNetCore.Components;
 
-namespace BasicTools.Shared.Services
+namespace BasicTools.Client.Services
 {
-    public class RouteSourceAssemblyProvider
+    class RouteSourceAssemblyProvider
     {
-        public RouteSourceAssemblyProvider(Assembly[] sourceAssemblies)
+        public RouteSourceAssemblyProvider(params Assembly[] sourceAssemblies)
         {
             SourceAssemblies = Array.AsReadOnly(sourceAssemblies);
 

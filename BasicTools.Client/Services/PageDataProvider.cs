@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
 
-namespace BasicTools.Shared.Services
+namespace BasicTools.Client.Services
 {
-    public class PageDataProvider
+    class PageDataProvider
     {
         const string SITE_TITLE = "Basic Dev Tools";
 

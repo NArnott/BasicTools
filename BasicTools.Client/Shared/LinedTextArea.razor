@@ -41,7 +41,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (HostType.IsWasm && firstRender)
+        if (!HostType.IsPreRender && firstRender)
         {
             var linedTextAreaJs = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "/scripts/lined-text-area.js");
 

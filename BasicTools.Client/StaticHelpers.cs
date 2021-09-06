@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace BasicTools.Shared
+namespace BasicTools.Client
 {
     public static class StaticHelpers
     {
