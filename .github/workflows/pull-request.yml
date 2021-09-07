@@ -2,7 +2,7 @@ on:
   pull_request:
     types: [opened, edited, reopened]
 
-name: Deploy to Amazon S3/CloudFront
+name: Pull Requests
 
 jobs:
   deploy:
