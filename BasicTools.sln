@@ -10,10 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		.github\workflows\aws.yml = .github\workflows\aws.yml
-		AwsEcsTaskDef.json = AwsEcsTaskDef.json
-		Directory.Build.props = Directory.Build.props
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
 		README.md = README.md
-		version.json = version.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicTools.Tests", "BasicTools.Tests\BasicTools.Tests.csproj", "{1F15A038-2E38-4EA7-A922-1367F284F22B}"
