@@ -18,7 +18,7 @@ jobs:
     - name: Setup dotnet 6
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '6.0'
+        dotnet-version: '6.0.x'
 
     - name: Build Static Site
       run: dotnet publish -c Release -o ../site-output
