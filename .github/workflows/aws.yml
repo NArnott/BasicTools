@@ -35,7 +35,7 @@ jobs:
     - name: Sync with S3
       run: |
         aws s3 sync site-output/ s3://basic-tools/ --exclude `"*.js`" --delete
-        aws s3 sync site-output/ s3://basic-tools/ --exclude `"*`" --include `"*.js`" --content-type application/javascript --delete #workaround for JS content type not set right by CLI
+        aws s3 sync site-output/ s3://basic-tools/ --exclude `"*`" --include `"*.js`" --content-type application/javascript --delete
 
     - name: Invalidate Cloudfront Distribution
       run: aws cloudfront create-invalidation --distribution-id ${{ secrets.S3_CLOUDFRONT_DISTRIBUTION }} --paths '/*'
