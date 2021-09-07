@@ -6,10 +6,10 @@ namespace BasicTools.Client.Shared
     public sealed class LayoutSetter : ComponentBase, IDisposable
     {
         [CascadingParameter]
-        MainLayout Layout { get; set; }
+        MainLayout Layout { get; set; } = default!;
 
         [Parameter]
-        public RenderFragment RightSidebar { get; set; }
+        public RenderFragment RightSidebar { get; set; } = default!;
 
         protected override void OnInitialized()
         {

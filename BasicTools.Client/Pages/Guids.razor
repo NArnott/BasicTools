@@ -1,4 +1,4 @@
-﻿@page "/guids"
+﻿@page "/guids/"
 @attribute [PageMetadata(
 Title = "GUID Generation",
 Description = "Generate GUID/UUID values. This tool is an easy to use, online tool to create guids for all sorts of situations. Includes templating support.",
@@ -112,9 +112,9 @@ Keywords = "guid, guidgen, uuid, guid generator, uuid generator, web based, onli
 
 @code {
     bool _formIsValid;
-    MudForm _form;
+    MudForm _form = default!;
 
-    MudDialog _templatesDialog;
+    MudDialog _templatesDialog = default!;
 
     private void ShowTemplatesDialog()
     {

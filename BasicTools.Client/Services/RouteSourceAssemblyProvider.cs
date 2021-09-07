@@ -1,15 +1,12 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using Microsoft.AspNetCore.Components;
 
-namespace BasicTools.Shared.Services
+namespace BasicTools.Client.Services
 {
-    public class RouteSourceAssemblyProvider
+    class RouteSourceAssemblyProvider
     {
-        public RouteSourceAssemblyProvider(Assembly[] sourceAssemblies)
+        public RouteSourceAssemblyProvider(params Assembly[] sourceAssemblies)
         {
             SourceAssemblies = Array.AsReadOnly(sourceAssemblies);
 
@@ -21,14 +18,14 @@ namespace BasicTools.Shared.Services
 
             PageMetadata = (
                 from route in PageRoutes
-                let pageMetaAttrib = (PageMetadataAttribute)Attribute.GetCustomAttribute(route.PageType, typeof(PageMetadataAttribute))
+                let pageMetaAttrib = (PageMetadataAttribute?)Attribute.GetCustomAttribute(route.PageType, typeof(PageMetadataAttribute))
                 where pageMetaAttrib != null
                 select new { route.RouteAttribute, pageMetaAttrib }
             ).ToDictionary(x => x.RouteAttribute.Template, x => x.pageMetaAttrib);
 
             ToolPages = (
                 from route in PageRoutes
-                let toolAttrib = (ToolPageAttribute)Attribute.GetCustomAttribute(route.PageType, typeof(ToolPageAttribute))
+                let toolAttrib = (ToolPageAttribute?)Attribute.GetCustomAttribute(route.PageType, typeof(ToolPageAttribute))
                 where toolAttrib != null
                 select new { route.RouteAttribute, toolAttrib }
             ).ToDictionary(x => x.RouteAttribute.Template, x => x.toolAttrib);

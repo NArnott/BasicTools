@@ -1,4 +1,4 @@
-﻿@page "/json-yaml"
+﻿@page "/json-yaml/"
 @attribute [PageMetadata(
 Title = "Json & Yaml Validation and Formatting",
 Description = "A tool for parsing, validating and beautifying json and yaml documents. Can even export to XML.",
@@ -71,6 +71,9 @@ Keywords = "JSON, Yaml, javascript object notation, web based, parser, format, o
 @code {
     private void OnOutputModeChanged(ChangeEventArgs args)
     {
+        if (args.Value == null)
+            throw new InvalidOperationException("args.Value is null");
+
         OutputMode = (JsonYamlOutputModes)Enum.Parse(typeof(JsonYamlOutputModes), (string)args.Value);
     }
 }

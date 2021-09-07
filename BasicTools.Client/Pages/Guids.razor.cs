@@ -11,19 +11,19 @@ namespace BasicTools.Client.Pages
 {
     partial class Guids
     {
-        private GuidModel[] _guids;
+        private GuidModel[]? _guids;
 
         private readonly ExampleTemplate[] _exampleTemplates;
 
         [Inject]
-        IJSRuntime JSRuntime { get; set; }
+        IJSRuntime JSRuntime { get; set; } = default!;
 
         [Inject]
-        ISnackbar ToastService { get; set; }
+        ISnackbar ToastService { get; set; } = default!;
 
         public int CreateGuidCount { get; set; } = 1;
 
-        string _template;
+        string _template = default!;
 
         public string Template
         {
@@ -43,13 +43,13 @@ namespace BasicTools.Client.Pages
 
         public GenerationModes GenerationMode { get; set; }
 
-        public GuidModel Sample { get; private set; }
+        public GuidModel Sample { get; private set; } = default!;
 
         public Guids()
         {
             Template = "{0}";
 
-            ExampleTemplate CreateTemplate(string name, string template, string hint = null)
+            ExampleTemplate CreateTemplate(string name, string template, string? hint = null)
             {
                 return new ExampleTemplate(name, template, hint, t =>
                 {
@@ -92,6 +92,9 @@ namespace BasicTools.Client.Pages
 
         public async Task SelectGuid(GuidModel model)
         {
+            if (_guids == null)
+                throw new InvalidOperationException("_guids null");
+
             foreach (var guid in _guids) guid.IsActive = false;
 
             model.IsActive = true;
@@ -103,6 +106,9 @@ namespace BasicTools.Client.Pages
 
         public async Task CopyAllGuids()
         {
+            if (_guids == null)
+                throw new InvalidOperationException("_guids null");
+
             var allGuids = string.Join(Environment.NewLine, _guids.Select(x => x.ToString()));
 
             await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", allGuids);
@@ -118,7 +124,7 @@ namespace BasicTools.Client.Pages
 
             private static readonly Guid _sampleGuid = Guid.Parse("00000000-aaaa-ffff-9999-000000000000");
 
-            private readonly string _output;
+            private readonly string? _output;
 
             public GuidModel(string template, int index, GenerationModes genMode, bool sampleGuid)
             {
@@ -176,7 +182,7 @@ namespace BasicTools.Client.Pages
 
             public bool IsValid => _output != null;
 
-            public override string ToString()
+            public override string? ToString()
             {
                 return _output;
             }
@@ -189,7 +195,7 @@ namespace BasicTools.Client.Pages
 
         public class ExampleTemplate
         {
-            public ExampleTemplate(string name, string template, string hint, Action<string> onSelect)
+            public ExampleTemplate(string name, string template, string? hint, Action<string> onSelect)
             {
                 Name = name;
                 Template = template;
@@ -204,7 +210,7 @@ namespace BasicTools.Client.Pages
 
             public string Template { get; }
 
-            public string Hint { get; }
+            public string? Hint { get; }
 
             private readonly Action<string> _onSelect;
 
@@ -222,7 +228,7 @@ namespace BasicTools.Client.Pages
 
             public static readonly CustomGuidFormatter Instance = new();
 
-            public object GetFormat(Type formatType)
+            public object? GetFormat(Type? formatType)
             {
                 if (formatType == typeof(ICustomFormatter))
                     return this;
@@ -230,7 +236,7 @@ namespace BasicTools.Client.Pages
                     return null;
             }
 
-            public string Format(string format, object arg, IFormatProvider formatProvider)
+            public string Format(string? format, object? arg, IFormatProvider? formatProvider)
             {
                 if (arg is not Guid guid)
                 {
@@ -240,9 +246,9 @@ namespace BasicTools.Client.Pages
                         throw new FormatException();
                 }
 
-                bool toUpper = format?.Contains("U", StringComparison.InvariantCultureIgnoreCase) == true;
+                bool toUpper = format?.Contains('U', StringComparison.InvariantCultureIgnoreCase) == true;
 
-                if (toUpper)
+                if (toUpper && format != null)
                     format = format.Replace("U", "");
 
                 var result = guid.ToString(format);

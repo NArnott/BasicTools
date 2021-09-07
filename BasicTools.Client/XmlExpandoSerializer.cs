@@ -35,7 +35,7 @@ namespace BasicTools.Client
             }
         }
 
-        static void SerializeToXml(XmlWriter writer, string elementName, object obj)
+        static void SerializeToXml(XmlWriter writer, string elementName, object? obj)
         {
             if (obj != null)
             {

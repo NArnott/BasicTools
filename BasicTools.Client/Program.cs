@@ -1,7 +1,9 @@
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using BasicTools.Shared;
+using BasicTools.Client.Services;
+using BasicTools.Client.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using MudBlazor;
+using MudBlazor.Services;
 
 [assembly: InternalsVisibleTo("BasicTools.Tests")]
 
@@ -9,14 +11,38 @@ namespace BasicTools.Client
 {
     public class Program
     {
+        private static bool _isPreRender = true;
+
         public static async Task Main(string[] args)
         {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            var services = builder.Services;
-            
-            services.AddSharedServices(false, typeof(App).Assembly);
+            _isPreRender = false;
 
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.RootComponents.Add<HeadSection>("head::after");
+            builder.RootComponents.Add<App>("#app");
+
+            var services = builder.Services;
+
+            ConfigureServices(services);
+            
             await builder.Build().RunAsync();
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton(new HostType() { IsPreRender = _isPreRender });
+
+            services.AddSingleton(new RouteSourceAssemblyProvider(typeof(App).Assembly));
+            services.AddScoped<PageDataProvider>();
+
+            services.AddMudServices(x =>
+            {
+                x.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.TopRight;
+
+                x.SnackbarConfiguration.PreventDuplicates = true;
+                x.SnackbarConfiguration.ShowTransitionDuration = 250;
+                x.SnackbarConfiguration.HideTransitionDuration = 500;
+            });
         }
     }
 }

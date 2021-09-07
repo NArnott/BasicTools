@@ -1,7 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Dynamic;
-using System.Threading.Tasks;using BasicTools.Shared.Services;
+using BasicTools.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -13,13 +12,13 @@ namespace BasicTools.Client.Pages
     partial class JsonYaml
     {
         [Inject]
-        IJSRuntime JSRuntime { get; set; }
+        IJSRuntime JSRuntime { get; set; } = default!;
 
         [Inject]
-        ISnackbar ToastService { get; set; }
+        ISnackbar ToastService { get; set; } = default!;
 
         [Inject]
-        HostType HostType { get; set; }
+        HostType HostType { get; set; } = default!;
 
         static readonly YamlDotNet.Serialization.Deserializer _yamlDeserializer = new();
         static readonly YamlDotNet.Serialization.Serializer _yamlSerializer = new();
@@ -30,7 +29,7 @@ namespace BasicTools.Client.Pages
         
         public OutputResult Output { get; private set; }
 
-        IJSObjectReference _jsonJs;
+        private IJSObjectReference? _jsonJs;
 
         public JsonYaml()
         {
@@ -42,7 +41,7 @@ namespace BasicTools.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            if (HostType.IsWasm)
+            if (!HostType.IsPreRender)
             {
                 await JSRuntime.InvokeVoidAsync("import", "/scripts/jquery.json-viewer.js");
 
@@ -52,11 +51,12 @@ namespace BasicTools.Client.Pages
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (HostType.IsWasm 
-                && Output.Mode == JsonYamlOutputModes.Json 
+            if (!HostType.IsPreRender
+                && Output.Mode == JsonYamlOutputModes.Json
                 && !Output.IsError
-                && Output.OutputText != null 
+                && Output.OutputText != null
                 && !Output.HasBeenRendered
+                && _jsonJs != null
                 )
             {
                 await _jsonJs.InvokeVoidAsync("displayJson", "#json-renderer", Output.OutputText);
@@ -67,7 +67,7 @@ namespace BasicTools.Client.Pages
 
         public void Process()
         {
-            ExpandoObject document = null;
+            ExpandoObject? document = null;
 
             Output = new OutputResult()
             {
@@ -109,7 +109,7 @@ namespace BasicTools.Client.Pages
 
         public class OutputResult
         {
-            public string OutputText { get; set; }
+            public string? OutputText { get; set; }
 
             public bool IsError { get; set; }
 
