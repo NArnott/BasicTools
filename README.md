@@ -8,8 +8,6 @@ Ever had that need to create handle of GUIDs for a project? Need to format or va
 The site is built using AspNetCore Blazor. The majority of the site is built using Blazor WebAssembly. However, to solve the SEO (Search Engine Optimization) issues inherent with SPA websites, the WebAssembly site is hosted from a AspNetCore Server, which provides pre-rendering support, as well as other service functions, such as a sitemap.
 
 The entire site is packaged as a Docker Container and hosted using the AWS cloud:
-* **ECR** for Docker Image storage
-* **ECS** for running the Docker Image in Fargate
-* **ALB** for load-balancing against the ECS tasks
-* **CloudFront** for caching and quick access to users
+* **S3** for static website storage
+* **CloudFront** for serving the website, caching, and quick access to users
 * **Route53** for DNS management
