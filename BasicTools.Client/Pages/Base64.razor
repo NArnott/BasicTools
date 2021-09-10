@@ -1,13 +1,12 @@
 ﻿@page "/base64/"
-@attribute [PageMetadata(
-Title = "Base 64 Encoding",
-Description = "Encode to Base64 or Decode from Base64. This tool is an easy to use, online tool to encode your data.",
-Keywords = "base 64, base64, conversion, encoding, decoding, web based, online base64, tool, free"
-)]
 @attribute [ToolPage("Base 64 Encoding", "Convert data to and from Base64 encoding.", "Icons.Material.Outlined.TextSnippet")]
 @inject ISnackbar ToastService
 @inject IJSRuntime JSRuntime
 @using System.Text
+
+<Title>Base 64 Encoding</Title>
+<Meta Name="description" Content="Encode to Base64 or Decode from Base64. This tool is an easy to use, online tool to encode your data." />
+<Meta Name="keywords" Content="base 64, base64, conversion, encoding, decoding, web based, online base64, tool, free" />
 
 <MudText Typo="Typo.h3">Base 64 Encoding / Decoding</MudText>
 

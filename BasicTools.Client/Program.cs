@@ -1,9 +1,9 @@
 using System.Runtime.CompilerServices;
 using BasicTools.Client.Services;
-using BasicTools.Client.Shared;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor;
 using MudBlazor.Services;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 [assembly: InternalsVisibleTo("BasicTools.Tests")]
 
@@ -18,7 +18,6 @@ namespace BasicTools.Client
             _isPreRender = false;
 
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<HeadSection>("head::after");
             builder.RootComponents.Add<App>("#app");
 
             var services = builder.Services;
@@ -30,10 +29,11 @@ namespace BasicTools.Client
 
         private static void ConfigureServices(IServiceCollection services)
         {
+            services.AddHeadElementHelper();
+
             services.AddSingleton(new HostType() { IsPreRender = _isPreRender });
 
             services.AddSingleton(new RouteSourceAssemblyProvider(typeof(App).Assembly));
-            services.AddScoped<PageDataProvider>();
 
             services.AddMudServices(x =>
             {
